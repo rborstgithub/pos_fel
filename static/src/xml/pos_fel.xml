@@ -4,7 +4,7 @@
     <t t-extend="OrderReceipt">
         <t t-jquery=".pos-receipt" t-operation="replace">
             <div class="pos-receipt" style="font-size: 190%; zoom: 90%; position: relative; left: 1.2em">
-                <t t-if="order.firma_fel">
+                <t t-if="firma_fel">
 
                     <t t-esc="widget.pos.config.name"/><br/>
                     <br/>
@@ -23,8 +23,8 @@
                     <br/>
                     Documento Tributario Electrónico FEL<br/>
                     Factura Electrónica<br/>
-                    Serie: <t t-esc="order.serie_fel || ''"/><br/>
-                    Número: <t t-esc="order.numero_fel || ''"/><br/>
+                    Serie: <t t-esc="serie_fel || ''"/><br/>
+                    Número: <t t-esc="numero_fel || ''"/><br/>
                     <br/>
                     Fecha: <t t-esc="order.formatted_validation_date"/><br/>
                     Empleado: <t t-esc="widget.pos.get_cashier().name"/><br/>
@@ -113,7 +113,7 @@
                     Certificador<br/>
                     INFILE, S.A.<br/>
                     NIT: 12521337<br/>
-                    Autorización: <t t-esc="order.firma_fel || ''"/><br/>
+                    Autorización: <t t-esc="firma_fel || ''"/><br/>
                     Fecha Certificación: <t t-esc="order.formatted_validation_date"/>
                     <t t-esc="order.name"/><br/>
                     <t t-if="receipt.footer">
