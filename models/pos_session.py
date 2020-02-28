@@ -8,7 +8,7 @@ class PosSession(models.Model):
 
     def action_pos_session_close(self):
         for session in self:
-            if session.config_id.invoice_journal_id:
+            if session.config_id.invoice_journal_id and session.config_id.invoice_journal_id.usuario_fel:
                 orders = session.order_ids.filtered(lambda order: order.state != 'invoiced' and order.amount_total > 0)
                 if len(orders) > 0:
                     raise ValidationError('Tiene pedidos sin factura, no puede cerrar sesión mientras no haya facturado todos los pedidos.')

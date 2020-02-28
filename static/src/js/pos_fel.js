@@ -14,8 +14,6 @@ screens.ReceiptScreenWidget.include({
         var order = this.pos.get_order();
         var self = this;
 
-        console.log(order);
-
         rpc.query({
             model: 'pos.order',
             method: 'search_read',
@@ -23,7 +21,6 @@ screens.ReceiptScreenWidget.include({
         }, {
             timeout: 3000,
         }).then(function (orders) {
-            console.log(orders);
             if (orders.length > 0) {
                 var env = self.get_receipt_render_env();
                 env['firma_fel'] = orders[0].firma_fel;
