@@ -8,6 +8,9 @@
 
                     <t t-esc="widget.pos.config.name"/><br/>
                     <br/>
+                    <t t-if='receipt.company.logo'>
+                        <img class="pos-receipt-logo" t-att-src='receipt.company.logo' alt="Logo"/>
+                    </t>
                     <t t-esc="widget.pos.company.name"/><br/>
                     NIT: <t t-esc="widget.pos.company.vat"/><br/>
                     <t t-if="receipt.header">
