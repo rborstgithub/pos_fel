@@ -7,7 +7,7 @@
                     <div class="header">
                     </div>
                     <div class="page">
-                        <t t-if="1">
+                        <t t-if="o.firma_fel">
 
                             <span t-field="o.config_id.name"/><br/>
                             <br/>
