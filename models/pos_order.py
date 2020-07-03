@@ -12,6 +12,6 @@ class PosOrder(models.Model):
     def _prepare_invoice_line(self, order_line):
         res = super(PosOrder, self)._prepare_invoice_line(order_line)
         if order_line.pack_lot_ids:
-            lotes = ', '.join([l.lot_name for l in order_line.pack_lot_ids if l])
+            lotes = ', '.join([l.lot_name for l in order_line.pack_lot_ids if l.lot_name])
             res['name'] += ': '+lotes
         return res
