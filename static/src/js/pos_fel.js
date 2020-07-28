@@ -17,7 +17,7 @@ screens.ReceiptScreenWidget.include({
         rpc.query({
             model: 'pos.order',
             method: 'search_read',
-            args: [[['pos_reference', '=', order.name]], ["firma_fel", "serie_fel", "numero_fel"]],
+            args: [[['pos_reference', '=', order.name]], ["firma_fel", "serie_fel", "numero_fel", "certificador_fel"]],
         }, {
             timeout: 3000,
         }).then(function (orders) {
@@ -26,34 +26,11 @@ screens.ReceiptScreenWidget.include({
                 env['firma_fel'] = orders[0].firma_fel;
                 env['serie_fel'] = orders[0].serie_fel;
                 env['numero_fel'] = orders[0].numero_fel;
+                env['certificador_fel'] = orders[0].certificador_fel;
                 self.$('.pos-receipt-container').html(QWeb.render('OrderReceipt', env));
             }
         });
     }
 })
-
-// var _super_posmodel = models.PosModel.prototype;
-// models.PosModel = models.PosModel.extend({
-//     push_and_invoice_order: function(order){
-//         var self = this;
-//         var invoiced = _super_posmodel.push_and_invoice_order.apply(this, arguments);
-//         invoiced.then(function(order_server_id) {
-//             rpc.query({
-//                     model: 'pos.order',
-//                     method: 'search_read',
-//                     args: [[['id', '=', order_server_id[0]]], ["firma_fel", "serie_fel", "numero_fel"]],
-//                 }, {
-//                     timeout: 3000,
-//                 }).then(function (orders) {
-//                     if (orders.length > 0) {
-//                         self.get_order().firma_fel = orders[0].firma_fel
-//                         self.get_order().serie_fel = orders[0].serie_fel
-//                         self.get_order().numero_fel = orders[0].numero_fel
-//                     }
-//                 });
-//         });
-//         return invoiced;
-//     }
-// })
 
 });

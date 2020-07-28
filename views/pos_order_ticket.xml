@@ -103,11 +103,19 @@
                                     </td>
                                 </tr>
                             </table>
-                            Sujeto a pagos trimestrales ISR<br/>
-                            Agente de Retención del IVA<br/>
-                            Certificador<br/>
-                            INFILE, S.A.<br/>
-                            NIT: 12521337<br/>
+                            <t t-if="o.certificador_fel">
+                                Sujeto a pagos trimestrales ISR<br/>
+                                Certificador<br/>
+                                G4S DOCUMENTA, S. A.<br/>
+                                NIT: 60010207<br/>
+                            </t>
+                            <t t-if="not o.certificador_fel">
+                                Sujeto a pagos trimestrales ISR<br/>
+                                Agente de Retención del IVA<br/>
+                                Certificador<br/>
+                                INFILE, S.A.<br/>
+                                NIT: 12521337<br/>
+                            </t>
                             Autorización: <t t-esc="o.firma_fel"/><br/>
                             Fecha Certificación: <t t-esc="o.date_order"/>
                             <span t-field="o.name"/><br/>
