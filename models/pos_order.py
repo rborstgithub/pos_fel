@@ -8,6 +8,7 @@ class PosOrder(models.Model):
     firma_fel = fields.Char('Firma FEL', related='account_move.firma_fel')
     serie_fel = fields.Char('Serie FEL', related='account_move.serie_fel')
     numero_fel = fields.Char('Numero FEL', related='account_move.numero_fel')
+    certificador_fel = fields.Char('Certificador FEL', related='account_move.certificador_fel')
 
     def _prepare_invoice_line(self, order_line):
         res = super(PosOrder, self)._prepare_invoice_line(order_line)
