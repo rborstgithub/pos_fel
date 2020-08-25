@@ -115,7 +115,7 @@
                             </td>
                         </tr>
                     </table>
-                    <t t-if="not order.certificador_fel">
+                    <t t-if="!order.certificador_fel">
                         Sujeto a pagos trimestrales ISR<br/>
                         Agente de Retención del IVA<br/>
                         Certificador<br/>
