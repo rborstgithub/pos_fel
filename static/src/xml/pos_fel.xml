@@ -37,7 +37,7 @@
                         <br/>
                         NIT: <t t-esc="order.get_client().vat ? order.get_client().vat : 'CF'"/><br/>
                         Nombre: <t t-esc="order.get_client().name"/><br/>
-                        Dirección: <t t-esc="order.get_client().street"/><br/>
+                        Dirección: <t t-esc="order.get_client().street"/><br/><br/>
                     </div>
                     <table class='receipt-orderlines'>
                         <colgroup>
