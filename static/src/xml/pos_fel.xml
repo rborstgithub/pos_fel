@@ -37,7 +37,7 @@
                         <br/>
                         NIT: <t t-esc="order.get_client().vat ? order.get_client().vat : 'CF'"/><br/>
                         Nombre: <t t-esc="order.get_client().name"/><br/>
-                        Dirección: <span t-field="order.get_client().street"/><br/>
+                        Dirección: <t t-esc="order.get_client().street"/><br/>
                     </div>
                     <table class='receipt-orderlines'>
                         <colgroup>
@@ -117,7 +117,7 @@
                     </table>
                     <t t-if="not order.certificador_fel">
                         Sujeto a pagos trimestrales ISR<br/>
-                        Agente de Retención del IVA<br/>
+                        Agente de Retención del IVA<br/>
                         Certificador<br/>
                         INFILE, S.A.<br/>
                         NIT: 12521337<br/>
@@ -136,7 +136,7 @@
                     </t>
                     <t t-if="order.firma_fel">
                         Autorización: <t t-esc="firma_fel || ''"/><br/>
-                        Fecha Certificación: <t t-esc="order.formatted_validation_date"/>
+                        Fecha Certificación: <t t-esc="order.formatted_validation_date"/>
                     </t>
                     <t t-esc="order.name"/><br/>
                     <t t-if="receipt.footer">
