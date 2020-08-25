@@ -24,7 +24,7 @@
                         <t t-esc="widget.pos.invoice_journal_address.street"/><br/>
                     </t>
                     <br/>
-                    <t t-if="order.firma_fel">
+                    <t t-if="firma_fel">
                         Documento Tributario Electrónico FEL<br/>
                         Factura Electrónica<br/>
                         Serie: <t t-esc="serie_fel || ''"/><br/>
@@ -115,26 +115,26 @@
                             </td>
                         </tr>
                     </table>
-                    <t t-if="!order.certificador_fel">
+                    <t t-if="!certificador_fel">
                         Sujeto a pagos trimestrales ISR<br/>
                         Agente de Retención del IVA<br/>
                         Certificador<br/>
                         INFILE, S.A.<br/>
                         NIT: 12521337<br/>
                     </t>
-                    <t t-if="order.certificador_fel == 'g4s'">
+                    <t t-if="certificador_fel == 'g4s'">
                         Sujeto a pagos trimestrales ISR<br/>
                         Certificador<br/>
                         G4S DOCUMENTA, S. A.<br/>
                         NIT: 60010207<br/>
                     </t>
-                    <t t-if="order.certificador_fel == 'gom'">
+                    <t t-if="certificador_fel == 'gom'">
                         Sujeto a pagos trimestrales ISR<br/>
                         Certificador<br/>
                         GOM SOLUTIONS, SOCIEDAD ANONIMA<br/>
                         NIT: 95189416<br/>
                     </t>
-                    <t t-if="order.firma_fel">
+                    <t t-if="firma_fel">
                         Autorización: <t t-esc="firma_fel || ''"/><br/>
                         Fecha Certificación: <t t-esc="order.formatted_validation_date"/>
                     </t>
