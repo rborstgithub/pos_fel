@@ -103,12 +103,6 @@
                                     </td>
                                 </tr>
                             </table>
-                            <t t-if="o.certificador_fel">
-                                Sujeto a pagos trimestrales ISR<br/>
-                                Certificador<br/>
-                                G4S DOCUMENTA, S. A.<br/>
-                                NIT: 60010207<br/>
-                            </t>
                             <t t-if="not o.certificador_fel">
                                 Sujeto a pagos trimestrales ISR<br/>
                                 Agente de Retención del IVA<br/>
@@ -116,8 +110,22 @@
                                 INFILE, S.A.<br/>
                                 NIT: 12521337<br/>
                             </t>
-                            Autorización: <t t-esc="o.firma_fel"/><br/>
-                            Fecha Certificación: <t t-esc="o.date_order"/>
+                            <t t-if="o.certificador_fel == 'g4s'">
+                                Sujeto a pagos trimestrales ISR<br/>
+                                Certificador<br/>
+                                G4S DOCUMENTA, S. A.<br/>
+                                NIT: 60010207<br/>
+                            </t>
+                            <t t-if="o.certificador_fel == 'gom'">
+                                Sujeto a pagos trimestrales ISR<br/>
+                                Certificador<br/>
+                                GOM SOLUTIONS, SOCIEDAD ANONIMA<br/>
+                                NIT: 95189416<br/>
+                            </t>
+                            <t t-if="o.firma_fel">
+                                Autorización: <t t-esc="o.firma_fel"/><br/>
+                                Fecha Certificación: <t t-esc="o.date_order"/>
+                            </t>
                             <span t-field="o.name"/><br/>
                             <t t-if="o.config_id.receipt_footer">
                                 <br />
