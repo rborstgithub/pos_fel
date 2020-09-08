@@ -19,7 +19,7 @@ screens.ReceiptScreenWidget.include({
             method: 'search_read',
             args: [[['pos_reference', '=', order.name]], ["firma_fel", "serie_fel", "numero_fel", "certificador_fel"]],
         }, {
-            timeout: 3000,
+            timeout: 6000,
         }).then(function (orders) {
             if (orders.length > 0) {
                 var env = self.get_receipt_render_env();
