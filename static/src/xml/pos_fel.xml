@@ -48,9 +48,9 @@
                         <tr t-foreach="orderlines" t-as="orderline">
                             <td>
                                 <t t-esc="orderline.get_product().display_name"/>
-                                <t t-if="orderline.descuento_porcentaje_fel > 0">
+                                <t t-if="orderline.get_discount() > 0">
                                     <div class="pos-disc-font">
-                                        With a <t t-esc="orderline.descuento_porcentaje_fel"/>% discount
+                                        With a <t t-esc="orderline.get_discount()"/>% discount
                                     </div>
                                 </t>
                                 <div class="linea_extras">
@@ -68,7 +68,7 @@
                                 <t t-esc="orderline.get_quantity_str_with_unit()"/>
                             </td>
                             <td class="pos-right-align">
-                                <t t-esc="widget.format_currency(orderline.get_display_price()-orderline.descuento_nominal_fel)"/>
+                                <t t-esc="widget.format_currency(orderline.get_display_price())"/>
                             </td>
                         </tr>
                     </table>
