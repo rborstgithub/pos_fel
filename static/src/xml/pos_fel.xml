@@ -1,6 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
+    
+    <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//*[@class='pos-receipt-contact']" position="replace">
+            <div class="pos-receipt-contact">
+                <t t-esc="widget.pos.company.name"/><br/>
+                NIT: <t t-esc="widget.pos.company.vat"/><br/>
+                <br/>
+                <t t-if="widget.pos.invoice_journal_address">
+                    <t t-esc="widget.pos.invoice_journal_address.name"/><br/>
+                    <t t-esc="widget.pos.invoice_journal_address.street"/><br/>
+                </t>
+                <br/>
+                <t t-if="firma_fel">
+                    Documento Tributario Electrónico FEL<br/>
+                    Factura Electrónica<br/>
+                    Serie: <t t-esc="serie_fel || ''"/><br/>
+                    Número: <t t-esc="numero_fel || ''"/><br/>
+                </t>
+                <br/>
+                <div class="datos_factura">
+                    Fecha: <t t-esc="order.formatted_validation_date"/><br/>
+                    Empleado: <t t-esc="widget.pos.get_cashier().name"/><br/>
+                    <br/>
+                    NIT: <t t-esc="order.get_client().vat ? order.get_client().vat : 'CF'"/><br/>
+                    Nombre: <t t-esc="order.get_client().name"/><br/>
+                    Dirección: <t t-esc="order.get_client().street"/><br/><br/>
+                </div>
+            </div>
+        </xpath>
+        
+        <xpath expr="//*[@class='pos-receipt-amount']" position="before">
+            <div>
+                <div>SUBTOTAL: <span t-esc='widget.format_currency(receipt.total_with_tax-precio_total_descuento)' class="pos-receipt-right-align"/></div>
+                <div>DESCUENTO: <span t-esc='widget.format_currency(precio_total_descuento)' class="pos-receipt-right-align"/></div>
+            </div>
+        </xpath>
+        
+        <xpath expr="//*[@class='before-footer']" position="after">
+            <br/>
+            <t t-if="!certificador_fel">
+                Certificador<br/>
+                INFILE, S.A.<br/>
+                NIT: 12521337<br/>
+            </t>
+            <t t-if="certificador_fel == 'g4s'">
+                Certificador<br/>
+                G4S DOCUMENTA, S. A.<br/>
+                NIT: 60010207<br/>
+            </t>
+            <t t-if="certificador_fel == 'gom'">
+                Sujeto a pagos trimestrales ISR<br/>
+                Certificador<br/>
+                GOM SOLUTIONS, SOCIEDAD ANONIMA<br/>
+                NIT: 95189416<br/>
+            </t>
+            <t t-if="certificador_fel == 'ecofactura'">
+                Sujeto a pagos trimestrales ISR<br/>
+                Certificador<br/>
+                ECO-FACTURAS<br/>
+                NIT: 64281167<br/>
+            </t>
+            <t t-if="firma_fel">
+                Autorización: <t t-esc="firma_fel || ''"/><br/>
+                Fecha Certificación: <t t-esc="order.formatted_validation_date"/>
+            </t>
+            <div t-if='!receipt.footer and !receipt.footer_html'>
+                Sujeto a pagos trimestrales ISR<br/>
+            </div>
+        </xpath>
+    </t>
 
+    <!--
     <t t-extend="OrderReceipt">
         <t t-jquery=".pos-receipt" t-operation="replace">
             <div class="pos-receipt" style="font-size: 190%; zoom: 90%; position: relative; left: 1.2em">
@@ -156,5 +227,6 @@
             </div>
         </t>
     </t>
+    -->
 
 </templates>

@@ -39,6 +39,8 @@ screens.ReceiptScreenWidget.include({
                         precio_total_descuento += linea.get_price_with_tax();
                     }
                 });
+                
+                env['precio_total_descuento'] = precio_total_descuento;
 
                 var descuento_porcentaje_fel = precio_total_descuento / precio_total_positivo * -1;
                 env['orderlines'].forEach(function(linea) {
