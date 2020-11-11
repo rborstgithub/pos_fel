@@ -2,6 +2,11 @@
 <templates id="template" xml:space="preserve">
     
     <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <xpath expr="//*[@class='pos-receipt']" position="attributes">
+            <attribute name="style">
+                position: relative; left: 1.2em
+            </attribute>
+        </xpath>
         <xpath expr="//*[@class='pos-receipt-contact']" position="replace">
             <div class="pos-receipt-contact">
                 <t t-esc="widget.pos.company.name"/><br/>
