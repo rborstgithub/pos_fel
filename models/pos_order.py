@@ -19,10 +19,10 @@ class PosOrder(models.Model):
         return res
 
     def _prepare_invoice_vals(self):
-        logging.warn(self.pedido_origen_id)
         res = super(PosOrder, self)._prepare_invoice_vals()
         if self.pedido_origen_id and self.pedido_origen_id.account_move:
             res['factura_original_id'] = self.pedido_origen_id.account_move.id
+            res['motivo_fel'] = 'Anulación'
         logging.warn(res)
         return res
 
