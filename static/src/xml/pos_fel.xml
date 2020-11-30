@@ -5,6 +5,7 @@
         <xpath expr="//*[@class='pos-receipt']" position="attributes">
             <attribute name="style">
                 position: relative; left: 1.2em
+                position: relative; left: 1.2em; zoom: 90%; 
             </attribute>
         </xpath>
         <xpath expr="//*[@class='pos-receipt-contact']" position="replace">
