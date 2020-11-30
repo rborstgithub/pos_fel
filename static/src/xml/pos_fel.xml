@@ -2,16 +2,19 @@
 <templates id="template" xml:space="preserve">
     
     <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        
+        <!-- Por alguna razón, no se imprime del tamañao correcto sin estos css -->
         <xpath expr="//*[@class='pos-receipt']" position="attributes">
             <attribute name="style">
-                position: relative; left: 1.2em
-                position: relative; left: 1.2em; zoom: 90%; 
+                position: relative; left: 1.2em; font-size: 150%; zoom: 90%;
             </attribute>
         </xpath>
+        
+        <!-- Información requerida por la SAT -->
         <xpath expr="//*[@class='pos-receipt-contact']" position="replace">
             <div class="pos-receipt-contact">
-                <t t-esc="widget.pos.company.name"/><br/>
-                NIT: <t t-esc="widget.pos.company.vat"/><br/>
+                <t t-esc="receipt.company.name"/><br/>
+                NIT: <t t-esc="receipt.company.vat"/><br/>
                 <br/>
                 <t t-if="widget.pos.invoice_journal_address">
                     <t t-esc="widget.pos.invoice_journal_address.name"/><br/>
@@ -26,16 +29,29 @@
                 </t>
                 <br/>
                 <div class="datos_factura">
-                    Fecha: <t t-esc="order.formatted_validation_date"/><br/>
-                    Empleado: <t t-esc="widget.pos.get_cashier().name"/><br/>
+                    Fecha: <t t-esc="receipt.date.localestring"/><br/>
+                    Empleado: <t t-esc="receipt.cashier"/><br/>
                     <br/>
                     NIT: <t t-esc="order.get_client().vat ? order.get_client().vat : 'CF'"/><br/>
-                    Nombre: <t t-esc="order.get_client().name"/><br/>
+                    Nombre: <t t-esc="receipt.name"/><br/>
                     Dirección: <t t-esc="order.get_client().street"/><br/><br/>
                 </div>
             </div>
         </xpath>
         
+        <!-- Poner el lote en cada linea -->
+        <xpath expr="//*[@class='orderlines']/t/t[3]" position="inside">
+            <div class="pos-receipt-left-padding">
+                <t t-set="orderline" t-value="orderlines[line_index]" />
+                <t t-if="orderline.pack_lot_lines">
+                    <t t-foreach="orderline.pack_lot_lines.models" t-as="lot">
+                        <span t-esc="lot.attributes['lot_name']"/>
+                    </t>
+                </t>
+            </div>
+        </xpath>
+        
+        <!-- Para las facturas que tienen negativos -->
         <xpath expr="//*[@class='pos-receipt-amount']" position="before">
             <div>
                 <div>SUBTOTAL: <span t-esc='widget.format_currency(receipt.total_with_tax-precio_total_descuento)' class="pos-receipt-right-align"/></div>
@@ -43,6 +59,7 @@
             </div>
         </xpath>
         
+        <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <br/>
             <t t-if="!certificador_fel">
