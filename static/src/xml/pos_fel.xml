@@ -33,7 +33,7 @@
                     Empleado: <t t-esc="receipt.cashier"/><br/>
                     <br/>
                     NIT: <t t-esc="order.get_client().vat ? order.get_client().vat : 'CF'"/><br/>
-                    Nombre: <t t-esc="receipt.name"/><br/>
+                    Nombre: <t t-esc="receipt.client"/><br/>
                     Dirección: <t t-esc="order.get_client().street"/><br/><br/>
                 </div>
             </div>
