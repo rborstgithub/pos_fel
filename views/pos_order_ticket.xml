@@ -25,10 +25,10 @@
                             <span t-field="o.account_move.journal_id.direccion.street"/><br/>
                             <br/>
                             Documento Tributario Electrónico FEL<br/>
-                            <t t-if="o.account_move.type == 'out_invoice'">
+                            <t t-if="o.account_move.move_type == 'out_invoice'">
                                 Factura Electrónica<br/>
                             </t>
-                            <t t-if="o.account_move.type == 'out_refund'">
+                            <t t-if="o.account_move.move_type == 'out_refund'">
                                 Nota de crédito electrónica
                             </t>
                             <br/>
