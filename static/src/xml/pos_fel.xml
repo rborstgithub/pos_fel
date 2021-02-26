@@ -5,8 +5,8 @@
         
         <!-- Por alguna razón, no se imprime del tamañao correcto sin estos css -->
         <xpath expr="//*[@class='pos-receipt']" position="attributes">
-            <attribute name="style">
-                position: relative; left: 1.2em; font-size: 150%; zoom: 90%;
+            <attribute name="t-att-style">
+                'position: relative; left: 1.2em; font-size: 150%; zoom: 90%;'
             </attribute>
         </xpath>
         
@@ -40,9 +40,6 @@
         </xpath>
         
         <xpath expr="//*[@class='orderlines']" position="attributes">
-            <attribute name="style">
-                position: relative; left: 1.2em; font-size: 150%; zoom: 90%;
-            </attribute>
             <attribute name="t-if">
                 state.fel_gt.firma_fel
             </attribute>
