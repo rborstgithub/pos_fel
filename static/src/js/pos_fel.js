@@ -26,9 +26,9 @@ odoo.define('pos_fel.pos_fel', function (require) {
                     if (orders.length > 0) {
                         
                         state.fel_gt.firma_fel = orders[0].firma_fel;
-                        state.fel_gt.serie_fel = orders[0].serie_fel || 'serie_fel';
-                        state.fel_gt.numero_fel = orders[0].numero_fel || 'numero_fel';
-                        state.fel_gt.certificador_fel = orders[0].certificador_fel || 'ecofactura';
+                        state.fel_gt.serie_fel = orders[0].serie_fel;
+                        state.fel_gt.numero_fel = orders[0].numero_fel;
+                        state.fel_gt.certificador_fel = orders[0].certificador_fel;
                         
                         /*
                         var env = self.get_receipt_render_env();
