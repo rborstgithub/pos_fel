@@ -108,7 +108,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <t t-if="not o.certificador_fel">
+                            <t t-if="o.certificador_fel == 'infile' or not o.certificador_fel">
                                 Certificador<br/>
                                 INFILE, S.A.<br/>
                                 NIT: 12521337<br/>
