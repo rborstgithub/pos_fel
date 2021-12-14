@@ -98,7 +98,7 @@
                 NIT: 77454820<br/>
             </t>
             <t t-if="state.fel_gt.firma_fel">
-                Autorización: <t t-esc="firma_fel || ''"/><br/>
+                Autorización: <t t-esc="state.fel_gt.firma_fel || ''"/><br/>
                 Fecha Certificación: <t t-esc="receipt.date.localestring"/>
             </t>
             <div t-if='!receipt.footer and !receipt.footer_html'>
