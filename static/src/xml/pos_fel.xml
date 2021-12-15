@@ -97,6 +97,11 @@
                 DIGIFACT SERVICIOS, SOCIEDAD ANONIMA<br/>
                 NIT: 77454820<br/>
             </t>
+            <t t-if="certificador_fel == 'ccg'">
+                Certificador<br/>
+                Cámara de Comercio de Guatemala<br/>
+                NIT: 351598<br/>
+            </t>
             <t t-if="state.fel_gt.firma_fel">
                 Autorización: <t t-esc="state.fel_gt.firma_fel || ''"/><br/>
                 Fecha Certificación: <t t-esc="receipt.date.localestring"/>
