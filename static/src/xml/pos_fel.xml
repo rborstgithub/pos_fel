@@ -29,7 +29,7 @@
                 </t>
                 <br/>
                 <div class="datos_factura">
-                    Fecha: <t t-esc="receipt.date.localestring"/><br/>
+                    Fecha: <t t-esc="state.fel_gt.fecha_pedido || ''"/><br/>
                     Empleado: <t t-esc="receipt.cashier"/><br/>
                     <br/>
                     NIT: <t t-esc="receipt.client.vat ? receipt.client.vat : 'CF'"/><br/>
@@ -104,7 +104,7 @@
             </t>
             <t t-if="state.fel_gt.firma_fel">
                 Autorización: <t t-esc="state.fel_gt.firma_fel || ''"/><br/>
-                Fecha Certificación: <t t-esc="receipt.date.localestring"/>
+                Fecha Certificación: <t t-esc="state.fel_gt.fecha_pedido || ''"/>
             </t>
             <div t-if='!receipt.footer and !receipt.footer_html'>
                 Sujeto a pagos trimestrales ISR<br/>
