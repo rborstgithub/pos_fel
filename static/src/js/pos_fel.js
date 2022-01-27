@@ -1,62 +1,72 @@
 odoo.define('pos_fel.pos_fel', function (require) {
-"use strict";
-
-var models = require('point_of_sale.models');
-var screens = require('point_of_sale.screens');
-
-var core = require('web.core');
-var rpc = require('web.rpc');
-
-var QWeb = core.qweb;
-
-screens.ReceiptScreenWidget.include({
-    render_receipt: function(){
-        var order = this.pos.get_order();
-        var self = this;
-
-        rpc.query({
-            model: 'pos.order',
-            method: 'search_read',
-            args: [[['pos_reference', '=', order.name]], ["firma_fel", "serie_fel", "numero_fel", "certificador_fel"]],
-        }, {
-            timeout: 5000,
-        }).then(function (orders) {
-            if (orders.length > 0) {
-                var env = self.get_receipt_render_env();
-
-                env['firma_fel'] = orders[0].firma_fel;
-                env['serie_fel'] = orders[0].serie_fel;
-                env['numero_fel'] = orders[0].numero_fel;
-                env['certificador_fel'] = orders[0].certificador_fel;
-
-                var precio_total_descuento = 0;
-                var precio_total_positivo = 0;
-
-                env['orderlines'].forEach(function(linea) {
-                    if (linea.get_unit_price() > 0) {
-                        precio_total_positivo += linea.get_price_with_tax();
-                    } else if (linea.get_unit_price() < 0) {
-                        precio_total_descuento += linea.get_price_with_tax();
-                    }
-                });
-                
-                env['precio_total_descuento'] = precio_total_descuento;
-
-                var descuento_porcentaje_fel = precio_total_descuento / precio_total_positivo * -1;
-                env['orderlines'].forEach(function(linea) {
-                    if (linea.get_unit_price() > 0) {
-                        linea.descuento_porcentaje_fel = descuento_porcentaje_fel * 100;
-                        linea.descuento_nominal_fel = linea.get_price_with_tax() * descuento_porcentaje_fel;
-                    } else if (linea.get_unit_price() < 0) {
-                        linea.descuento_porcentaje_fel = 100;
-                        linea.descuento_nominal_fel = linea.get_price_with_tax();
-                    }
-                });
-
-                self.$('.pos-receipt-container').html(QWeb.render('OrderReceipt', env));
+    "use strict";
+    
+    const { format } = require('web.field_utils');
+    
+    const Registries = require('point_of_sale.Registries');
+    const OrderReceipt = require('point_of_sale.OrderReceipt');
+    
+    const PosFELOrderReceipt = (OrderReceipt) =>
+        class extends OrderReceipt {
+            constructor() {
+                super(...arguments);
+                this._fel = {firma_fel: '', serie_fel: '', numero_fel: '', certificador_fel: '', fecha_pedido: '', precio_total_descuento: 0};
             }
-        });
-    }
-})
+            
+            get fel() {
+                return this._fel;
+            }
+            
+            async willStart() {
+                const env = this.receiptEnv;
+                const fel = this._fel;
+                const orderlines = this._receiptEnv.orderlines;
+
+                const [order] = await this.rpc(
+                    {
+                        model: 'pos.order',
+                        method: 'search_read',
+                        args: [[['pos_reference', '=', env.order.name]], ["firma_fel", "serie_fel", "numero_fel", "certificador_fel", "date_order"]],
+                    },
+                    {
+                        timeout: 5000,
+                        shadow: true,
+                    }
+                );
+                if (order) {
+                    fel.firma_fel = order.firma_fel;
+                    fel.serie_fel = order.serie_fel;
+                    fel.numero_fel = order.numero_fel;
+                    fel.certificador_fel = order.certificador_fel;
+                    fel.fecha_pedido = format.datetime(moment(order.date_order), {}, {timezone: true});
+    
+                    let precio_total_descuento = 0;
+                    let precio_total_positivo = 0;
+    
+                    orderlines.forEach(function(linea) {
+                        if (linea.price * linea.quantity > 0) {
+                            precio_total_positivo += linea.price * linea.quantity;
+                        } else if (linea.price * linea.quantity < 0) {
+                            precio_total_descuento += Math.abs(linea.price * linea.quantity);
+                        }
+                    });
+
+                    fel.precio_total_descuento = precio_total_descuento;
+                    
+                    let descuento_porcentaje_fel = precio_total_descuento / precio_total_positivo;
+                    orderlines.forEach(function(linea) {
+                        if (linea.price * linea.quantity > 0) {
+                            linea.descuento_porcentaje_fel = descuento_porcentaje_fel * 100;
+                            linea.descuento_nominal_fel = linea.price * linea.quantity * descuento_porcentaje_fel;
+                        } else if (linea.price * linea.quantity < 0) {
+                            linea.descuento_porcentaje_fel = 100;
+                            linea.descuento_nominal_fel = linea.price * linea.quantity;
+                        }
+                    });
+                }
+            }
+        };
+        
+    Registries.Component.extend(OrderReceipt, PosFELOrderReceipt);
 
 });

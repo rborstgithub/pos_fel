@@ -16,11 +16,16 @@
         'views/pos_order_ticket.xml',
         'views/templates.xml',
     ],
-    'qweb': [
-        'static/src/xml/pos_fel.xml',
-    ],
     'installable': True,
     'auto_install': False,
+    'assets': {
+        'point_of_sale.assets': [
+            'pos_fel/static/src/js/pos_fel.js',
+        ],
+        'web.assets_qweb': [
+            'pos_fel/static/src/xml/**/*',
+        ],
+    },
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
