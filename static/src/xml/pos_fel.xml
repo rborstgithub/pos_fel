@@ -87,6 +87,11 @@
                 Cámara de Comercio de Guatemala<br/>
                 NIT: 351598<br/>
             </t>
+            <t t-if="certificador_fel == 'megaprint'">
+                Certificador<br/>
+                MEGAPRINT, S.A.<br/>
+                NIT: 50510231<br/>
+            </t>
             <t t-if="firma_fel">
                 Autorización: <t t-esc="firma_fel || ''"/><br/>
                 Fecha Certificación: <t t-esc="order.formatted_validation_date"/>
