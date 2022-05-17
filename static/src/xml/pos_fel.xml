@@ -71,6 +71,11 @@
                 ECO-FACTURAS<br/>
                 NIT: 64281167<br/>
             </t>
+            <t t-if="state.fel_gt.certificador_fel == 'digifact'">
+                Certificador<br/>
+                DIGIFACT SERVICIOS, SOCIEDAD ANONIMA<br/>
+                NIT: 77454820<br/>
+            </t>
             <t t-if="fel.certificador_fel == 'ccg'">
                 Certificador<br/>
                 Cámara de Comercio de Guatemala<br/>
