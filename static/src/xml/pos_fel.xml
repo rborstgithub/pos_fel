@@ -62,7 +62,7 @@
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <br/>
-            <t t-if="!certificador_fel">
+            <t t-if="certificador_fel == 'infile' || !certificador_fel">
                 Certificador<br/>
                 INFILE, S.A.<br/>
                 NIT: 12521337<br/>
@@ -81,6 +81,11 @@
                 Certificador<br/>
                 ECO-FACTURAS<br/>
                 NIT: 64281167<br/>
+            </t>
+            <t t-if=certificador_fel == 'digifact'">
+                Certificador<br/>
+                DIGIFACT SERVICIOS, SOCIEDAD ANONIMA<br/>
+                NIT: 77454820<br/>
             </t>
             <t t-if="certificador_fel == 'ccg'">
                 Certificador<br/>
