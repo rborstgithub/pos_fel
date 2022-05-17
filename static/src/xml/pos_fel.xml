@@ -51,7 +51,7 @@
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <br/>
-            <t t-if="!fel.certificador_fel">
+            <t t-if="fel.certificador_fel == 'infile' || !fel.certificador_fel">
                 Certificador<br/>
                 INFILE, S.A.<br/>
                 NIT: 12521337<br/>
