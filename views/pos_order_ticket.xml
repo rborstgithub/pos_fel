@@ -108,7 +108,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <t t-if="not o.certificador_fel">
+                            <t t-if="o.certificador_fel == 'infile' or not o.certificador_fel">
                                 Certificador<br/>
                                 INFILE, S.A.<br/>
                                 NIT: 12521337<br/>
@@ -127,6 +127,11 @@
                                 Certificador<br/>
                                 ECO-FACTURAS<br/>
                                 NIT: 64281167<br/>
+                            </t>
+                            <t t-if="o.certificador_fel == 'digifact'">
+                                Certificador<br/>
+                                DIGIFACT SERVICIOS, SOCIEDAD ANONIMA<br/>
+                                NIT: 77454820<br/>
                             </t>
                             <t t-if="o.firma_fel">
                                 Autorización: <t t-esc="o.firma_fel"/><br/>
