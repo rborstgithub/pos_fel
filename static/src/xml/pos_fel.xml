@@ -35,7 +35,7 @@
                     <br/>
                     NIT: <t t-esc="receipt.client.vat ? receipt.client.vat : 'CF'"/><br/>
                     Nombre: <t t-esc="receipt.client.name"/><br/>
-                    Dirección: <t t-esc="receipt.street"/><br/><br/>
+                    Dirección: <t t-esc="receipt.client.street"/><br/><br/>
                 </div>
             </div>
         </xpath>
