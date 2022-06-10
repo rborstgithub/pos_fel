@@ -71,7 +71,7 @@
                 ECO-FACTURAS<br/>
                 NIT: 64281167<br/>
             </t>
-            <t t-if="state.fel_gt.certificador_fel == 'digifact'">
+            <t t-if="fel.certificador_fel == 'digifact'">
                 Certificador<br/>
                 DIGIFACT SERVICIOS, SOCIEDAD ANONIMA<br/>
                 NIT: 77454820<br/>
@@ -81,7 +81,7 @@
                 Cámara de Comercio de Guatemala<br/>
                 NIT: 351598<br/>
             </t>
-            <t t-if="certificador_fel == 'megaprint'">
+            <t t-if="fel.certificador_fel == 'megaprint'">
                 Certificador<br/>
                 MEGAPRINT, S.A.<br/>
                 NIT: 50510231<br/>
