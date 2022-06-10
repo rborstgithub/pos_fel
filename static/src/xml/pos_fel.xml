@@ -97,12 +97,12 @@
                 DIGIFACT SERVICIOS, SOCIEDAD ANONIMA<br/>
                 NIT: 77454820<br/>
             </t>
-            <t t-if="certificador_fel == 'ccg'">
+            <t t-if="state.fel_gt.certificador_fel == 'ccg'">
                 Certificador<br/>
                 Cámara de Comercio de Guatemala<br/>
                 NIT: 351598<br/>
             </t>
-            <t t-if="certificador_fel == 'megaprint'">
+            <t t-if="state.fel_gt.certificador_fel == 'megaprint'">
                 Certificador<br/>
                 MEGAPRINT, S.A.<br/>
                 NIT: 50510231<br/>
