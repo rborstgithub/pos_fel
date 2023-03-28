@@ -20,6 +20,7 @@
     'assets': {
         'point_of_sale.assets': [
             'pos_fel/static/src/js/pos_fel.js',
+            'pos_fel/static/src/js/ClientListScreen.js',
         ],
         'web.assets_qweb': [
             'pos_fel/static/src/xml/**/*',
