@@ -12,13 +12,13 @@ odoo.define('pos_fel.ClientListScreen', function (require) {
             if (!result.length) {
                 result = await this.rpc({
                     model: 'res.partner',
-                    method: 'obtener_cliente_nit_sat',
+                    method: 'crear_partner_con_datos_sat',
                     args: [[], [this.state.query, fields, this.env.pos.company.id]],
                 }, {
                     timeout: 3000,
                     shadow: true,
                 });
-                
+
                 if (result.length) {
                     this.state.selectedClient = result[0];
                     this.clickNext();
