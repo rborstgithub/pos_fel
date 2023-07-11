@@ -2,26 +2,23 @@ odoo.define('pos_fel.pos_fel', function (require) {
     "use strict";
     
     const { format } = require('web.field_utils');
-    
-    const Registries = require('point_of_sale.Registries');
     const OrderReceipt = require('point_of_sale.OrderReceipt');
+    const Registries = require('point_of_sale.Registries');
     
-    const PosFELOrderReceipt = (OrderReceipt) =>
-        class extends OrderReceipt {
-            constructor() {
-                super(...arguments);
-                this._fel = {firma_fel: '', serie_fel: '', numero_fel: '', certificador_fel: '', fecha_pedido: '', precio_total_descuento: 0};
-            }
+    const { onWillStart } = owl;
+    
+    const PosFELOrderReceipt = (OrderReceipt) => class PosFELOrderReceipt extends OrderReceipt {
+        setup() {
+            super.setup();
+            this._fel = {firma_fel: '', serie_fel: '', numero_fel: '', certificador_fel: '', fecha_pedido: '', precio_total_descuento: 0};
             
-            get fel() {
-                return this._fel;
-            }
-            
-            async willStart() {
+            onWillStart(async () => {
                 const env = this.receiptEnv;
                 const fel = this._fel;
                 const orderlines = this._receiptEnv.orderlines;
-
+                console.log(env);
+                console.log(fel);
+    
                 const [order] = await this.rpc(
                     {
                         model: 'pos.order',
@@ -33,6 +30,7 @@ odoo.define('pos_fel.pos_fel', function (require) {
                         shadow: true,
                     }
                 );
+                console.log(order);
                 if (order) {
                     fel.firma_fel = order.firma_fel;
                     fel.serie_fel = order.serie_fel;
@@ -50,7 +48,7 @@ odoo.define('pos_fel.pos_fel', function (require) {
                             precio_total_descuento += Math.abs(linea.price * linea.quantity);
                         }
                     });
-
+    
                     fel.precio_total_descuento = precio_total_descuento;
                     
                     let descuento_porcentaje_fel = precio_total_descuento / precio_total_positivo;
@@ -64,9 +62,13 @@ odoo.define('pos_fel.pos_fel', function (require) {
                         }
                     });
                 }
-            }
-        };
+            });
+        }
         
+        get fel() {
+            return this._fel;
+        }
+    };
     Registries.Component.extend(OrderReceipt, PosFELOrderReceipt);
 
 });

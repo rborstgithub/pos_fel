@@ -17,16 +17,15 @@
             <field name="header_spacing">3</field>
             <field name="dpi">130</field>
         </record>
-
-        <report
-            id="pos_fel_pos_order_ticket"
-            string="Ticket"
-            model="pos.order"
-            report_type="qweb-pdf"
-            file="pos_fel.report_pos_order_ticket"
-            name="pos_fel.report_pos_order_ticket"
-            paperformat="paperformat_ticket"
-        />
+        
+        <record id="pos_fel_pos_order_ticket" model="ir.actions.report">
+            <field name="name">Ticket</field>
+            <field name="model">pos.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_fel.report_pos_order_ticket</field>
+            <field name="report_file">pos_fel.report_pos_order_ticket</field>
+            <field name="paperformat_id" ref="paperformat_ticket"/>
+        </record>
 
     </data>
 </odoo>

@@ -1,24 +1,14 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import base64
-import collections
-import re
-
-import requests
-import logging
 from odoo import api, fields, models, tools, SUPERUSER_ID, _, Command
-from odoo.osv.expression import get_unaccent_wrapper
-from odoo.exceptions import RedirectWarning, UserError, ValidationError
-
+import logging
 
 class Partner(models.Model):
     _inherit = 'res.partner'
 
     def crear_partner_con_datos_sat(self, datos_cliente):
         query = datos_cliente[0]
-        fields = datos_cliente[1]
-        company_id = datos_cliente[2]
+        company_id = datos_cliente[1]
 
         company_id = self.env['res.company'].search([('id','=',company_id)])
 
@@ -30,6 +20,7 @@ class Partner(models.Model):
                 'vat': datos_facturacion_fel['nit'],
             }
             partner = self.create(partner_dic)
-            return partner.read(fields)
+            params = self._loader_params_res_partner()
+            return partner.read(params['search_params']['fields'])
         else:
             return []

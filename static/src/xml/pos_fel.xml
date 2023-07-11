@@ -33,9 +33,9 @@
                     Fecha: <t t-esc="fel.fecha_pedido"/><br/>
                     Empleado: <t t-esc="receipt.cashier"/><br/>
                     <br/>
-                    NIT: <t t-esc="receipt.client.vat ? receipt.client.vat : 'CF'"/><br/>
-                    Nombre: <t t-esc="receipt.client.name"/><br/>
-                    Dirección: <t t-esc="receipt.client.street"/><br/><br/>
+                    NIT: <t t-esc="receipt.partner.vat ? receipt.partner.vat : 'CF'"/><br/>
+                    Nombre: <t t-esc="receipt.partner.name"/><br/>
+                    Dirección: <t t-esc="receipt.partner.street"/><br/><br/>
                 </div>
             </div>
         </xpath>
@@ -85,6 +85,11 @@
                 Certificador<br/>
                 MEGAPRINT, S.A.<br/>
                 NIT: 50510231<br/>
+            </t>
+            <t t-if="fel.certificador_fel == 'totaldoc'">
+                Certificador<br/>
+                Grupo CDS, S.A.<br/>
+                NIT: 107902281‬<br/>
             </t>
             <t t-if="fel.firma_fel">
                 Autorización: <t t-esc="fel.firma_fel || ''"/><br/>

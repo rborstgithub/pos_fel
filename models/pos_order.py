@@ -23,6 +23,5 @@ class PosOrder(models.Model):
         if self.pedido_origen_id and self.pedido_origen_id.account_move:
             res['factura_original_id'] = self.pedido_origen_id.account_move.id
             res['motivo_fel'] = 'Anulación'
-        logging.warn(res)
         return res
 

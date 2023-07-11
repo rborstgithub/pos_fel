@@ -1,9 +1,8 @@
-
 # -*- coding: utf-8 -*-
 
 {
     'name': 'Point of Sale unido a facturacion electrónica',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Point of Sale',
     'sequence': 6,
     'summary': 'Point of Sale unido a facturacion electrónica',
@@ -19,13 +18,9 @@
     'auto_install': False,
     'assets': {
         'point_of_sale.assets': [
-            'pos_fel/static/src/js/pos_fel.js',
-            'pos_fel/static/src/js/ClientListScreen.js',
-        ],
-        'web.assets_qweb': [
+            'pos_fel/static/src/js/**/*',
             'pos_fel/static/src/xml/**/*',
         ],
     },
+    'license': 'Other OSI approved licence',
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
