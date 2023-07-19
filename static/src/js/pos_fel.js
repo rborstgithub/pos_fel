@@ -16,8 +16,6 @@ odoo.define('pos_fel.pos_fel', function (require) {
                 const env = this.receiptEnv;
                 const fel = this._fel;
                 const orderlines = this._receiptEnv.orderlines;
-                console.log(env);
-                console.log(fel);
     
                 const [order] = await this.rpc(
                     {
@@ -30,7 +28,7 @@ odoo.define('pos_fel.pos_fel', function (require) {
                         shadow: true,
                     }
                 );
-                console.log(order);
+
                 if (order) {
                     fel.firma_fel = order.firma_fel;
                     fel.serie_fel = order.serie_fel;
