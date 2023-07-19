@@ -17,9 +17,9 @@
                 <t t-esc="receipt.company.name"/><br/>
                 NIT: <t t-esc="receipt.company.vat"/><br/>
                 <br/>
-                <t t-if="env.pos.invoice_journal_address">
-                    <t t-esc="env.pos.invoice_journal_address.name"/><br/>
-                    <t t-esc="env.pos.invoice_journal_address.street"/><br/>
+                <t t-if="env.pos.diario_facturacion">
+                    <t t-esc="env.pos.diario_facturacion.nombre"/><br/>
+                    <t t-esc="env.pos.diario_facturacion.direccion"/><br/>
                 </t>
                 <br/>
                 <t t-if="fel.firma_fel">
@@ -89,7 +89,7 @@
             <t t-if="fel.certificador_fel == 'totaldoc'">
                 Certificador<br/>
                 Grupo CDS, S.A.<br/>
-                NIT: 107902281‬<br/>
+                NIT: 107902281<br/>
             </t>
             <t t-if="fel.firma_fel">
                 Autorización: <t t-esc="fel.firma_fel || ''"/><br/>
