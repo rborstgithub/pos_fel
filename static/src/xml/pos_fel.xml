@@ -11,6 +11,7 @@
                 <t t-if="env.pos.diario_facturacion">
                     <t t-esc="env.pos.diario_facturacion.nombre"/><br/>
                     <t t-esc="env.pos.diario_facturacion.direccion"/><br/>
+                    <t t-esc="env.pos.diario_facturacion.phone or ''"/><br/>
                 </t>
                 <br/>
                 <t t-if="fel.firma_fel">
