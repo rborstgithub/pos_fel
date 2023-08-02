@@ -11,6 +11,7 @@
                 <t t-if="env.pos.invoice_journal_address">
                     <t t-esc="env.pos.invoice_journal_address.name"/><br/>
                     <t t-esc="env.pos.invoice_journal_address.street"/><br/>
+                    <t t-esc="env.pos.invoice_journal_address.phone or ''"/><br/>
                 </t>
                 <br/>
                 <t t-if="fel.firma_fel">
