@@ -20,9 +20,9 @@ class PosOrder(models.Model):
 
     def _prepare_invoice_vals(self):
         res = super(PosOrder, self)._prepare_invoice_vals()
+        res['numero_acceso_fel'] = str(self.id+400000000)
         if self.pedido_origen_id and self.pedido_origen_id.account_move:
             res['factura_original_id'] = self.pedido_origen_id.account_move.id
             res['motivo_fel'] = 'Anulación'
-        logging.warn(res)
         return res
 

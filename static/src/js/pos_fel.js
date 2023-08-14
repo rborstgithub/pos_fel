@@ -10,7 +10,7 @@ odoo.define('pos_fel.pos_fel', function (require) {
         class extends OrderReceipt {
             constructor() {
                 super(...arguments);
-                this._fel = {firma_fel: '', serie_fel: '', numero_fel: '', certificador_fel: '', fecha_pedido: '', precio_total_descuento: 0};
+                this._fel = {firma_fel: '', serie_fel: '', numero_fel: '', numero_acceso_fel: '', certificador_fel: '', fecha_pedido: '', precio_total_descuento: 0};
             }
             
             get fel() {
@@ -37,6 +37,7 @@ odoo.define('pos_fel.pos_fel', function (require) {
                     fel.firma_fel = order.firma_fel;
                     fel.serie_fel = order.serie_fel;
                     fel.numero_fel = order.numero_fel;
+                    fel.numero_acceso_fel = order.id+400000000;
                     fel.certificador_fel = order.certificador_fel;
                     fel.fecha_pedido = format.datetime(moment(order.date_order), {}, {timezone: true});
     

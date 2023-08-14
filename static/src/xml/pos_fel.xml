@@ -20,6 +20,10 @@
                     Serie: <t t-esc="fel.serie_fel || ''"/><br/>
                     Número: <t t-esc="fel.numero_fel || ''"/><br/>
                 </t>
+                <t t-else="">
+                    Documento en Contingencia<br/>
+                    Número de Acceso: <span t-esc="fel.numero_acceso_fel"/><br/>
+                </t>
                 <br/>
                 <div class="datos_factura">
                     Fecha: <t t-esc="fel.fecha_pedido"/><br/>
@@ -43,7 +47,7 @@
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <br/>
-            <t t-if="fel.certificador_fel == 'infile' || !fel.certificador_fel">
+            <t t-if="fel.certificador_fel == 'infile' || (!fel.certificador_fel &amp;&amp; fel.firma_fel)">
                 Certificador<br/>
                 INFILE, S.A.<br/>
                 NIT: 12521337<br/>
@@ -81,6 +85,9 @@
             <t t-if="fel.firma_fel">
                 Autorización: <t t-esc="fel.firma_fel || ''"/><br/>
                 Fecha Certificación: <t t-esc="fel.fecha_pedido"/>
+            </t>
+            <t t-else="">
+                <br/>Emisión en contingencia, obtenga el DTE Certificado en el sitio www.sat.gob.gt/fel
             </t>
             <div t-if='!receipt.footer and !receipt.footer_html'>
                 Sujeto a pagos trimestrales ISR<br/>
