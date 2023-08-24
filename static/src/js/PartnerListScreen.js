@@ -9,7 +9,7 @@ odoo.define('pos_fel.PartnerListScreen', function (require) {
             let result = await super.getNewPartners();
             if (!result.length) {
                 result = await this.rpc({
-                    model: 'res.partner',
+                    model: 'pos.session',
                     method: 'crear_partner_con_datos_sat',
                     args: [[], [this.state.query, this.env.pos.company.id]],
                 }, {
