@@ -24,10 +24,12 @@
                 <div class="datos_factura">
                     Fecha: <t t-esc="fel.fecha_pedido"/><br/>
                     Empleado: <t t-esc="receipt.cashier"/><br/>
-                    <br/>
-                    NIT: <t t-esc="receipt.partner.vat ? receipt.partner.vat : 'CF'"/><br/>
-                    Nombre: <t t-esc="receipt.partner.name"/><br/>
-                    Dirección: <t t-esc="receipt.partner.street"/><br/><br/>
+                    <t t-if="receipt.partner">
+                        <br/>
+                        NIT: <t t-esc="receipt.partner.vat ? receipt.partner.vat : 'CF'"/><br/>
+                        Nombre: <t t-esc="receipt.partner.name"/><br/>
+                        Dirección: <t t-esc="receipt.partner.street"/><br/><br/>
+                    </t>
                 </div>
             </div>
         </xpath>
