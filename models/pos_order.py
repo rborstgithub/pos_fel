@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api, _
 import logging
+import re
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
@@ -23,7 +24,7 @@ class PosOrder(models.Model):
         
         partes = (self.pos_reference or 'Order 0-0-0').split('-');
         numero_acceso_fel = partes[0]+partes[2];
-        numero_acceso_fel = int(numero_acceso_fel.replace('Order ',''));
+        numero_acceso_fel = int(re.sub(r'[^\d]+', '', numero_acceso_fel));
         
         res['numero_acceso_fel'] = numero_acceso_fel+400000000
         if self.pedido_origen_id and self.pedido_origen_id.account_move:
