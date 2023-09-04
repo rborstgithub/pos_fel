@@ -84,6 +84,11 @@
                 MEGAPRINT, S.A.<br/>
                 NIT: 50510231<br/>
             </t>
+            <t t-if="fel.certificador_fel == 'totaldoc'">
+                Certificador<br/>
+                Grupo CDS, S.A.<br/>
+                NIT: 107902281<br/>
+            </t>
             <t t-if="fel.firma_fel">
                 Autorización: <t t-esc="fel.firma_fel || ''"/><br/>
                 Fecha Certificación: <t t-esc="fel.fecha_pedido"/>
