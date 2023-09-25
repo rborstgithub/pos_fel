@@ -33,5 +33,4 @@ odoo.define('pos_fel.PartnerListScreen', function (require) {
     Registries.Component.extend(PartnerListScreen, PosFELPartnerListScreen);
     
     return PosFELPartnerListScreen;
-    
 });
