@@ -15,4 +15,4 @@ class PosSession(models.Model):
                     if order.account_move.state != 'open' and not order.account_move.firma_fel:
                         raise ValidationError('La factura del pedido {} no está firmada, por favor ingrese a la factura y validela para poder cerrar sesión.'.format(order.name))
 
-        res = super(PosSession, self).action_pos_session_close(balancing_account, amount_to_balance, bank_payment_method_diffs)
+        return super(PosSession, self).action_pos_session_close(balancing_account, amount_to_balance, bank_payment_method_diffs)
