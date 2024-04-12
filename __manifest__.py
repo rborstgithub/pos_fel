@@ -2,7 +2,7 @@
 
 {
     'name': 'Point of Sale unido a facturacion electrónica',
-    'version': '1.1',
+    'version': '1.2',
     'category': 'Point of Sale',
     'sequence': 6,
     'summary': 'Point of Sale unido a facturacion electrónica',
@@ -17,9 +17,8 @@
     'installable': True,
     'auto_install': False,
     'assets': {
-        'point_of_sale.assets': [
-            'pos_fel/static/src/js/**/*',
-            'pos_fel/static/src/xml/**/*',
+        'point_of_sale._assets_pos': [
+            'pos_fel/static/src/**/*',
         ],
     },
     'license': 'Other OSI approved licence',

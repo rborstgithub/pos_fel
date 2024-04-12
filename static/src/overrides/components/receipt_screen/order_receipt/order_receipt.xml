@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     
-    <t t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+    <t t-name="pos_fel.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <!-- Información requerida por la SAT -->
         <xpath expr="//*[@class='pos-receipt-contact']" position="after">
             <div class="pos-receipt-contact" style="font-size: 100%;">
