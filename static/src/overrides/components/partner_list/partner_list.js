@@ -1,29 +1,24 @@
 /** @odoo-module */
  
 import { PartnerListScreen } from "@point_of_sale/app/screens/partner_list/partner_list";
-
+import { useService } from "@web/core/utils/hooks";
+import { ErrorPopup } from "@point_of_sale/app/errors/popups/error_popup";
+import { patch } from "@web/core/utils/patch";
 
 patch(PartnerListScreen.prototype, {
+    setup() {
+        super.setup();
+        this.orm = useService("orm");
+    },
+
     async getNewPartners() {
         let result = await super.getNewPartners();
         if (!result.length) {
-            result = await this.rpc({
-                model: 'pos.session',
-                method: 'crear_partner_con_datos_sat',
-                args: [[], [this.state.query, this.env.pos.company.id]],
-            }, {
-                timeout: 3000,
-                shadow: true,
-            });
+            result = await this.orm.silent.call("pos.session", "crear_partner_con_datos_sat", [this.state.query, this.pos.company.id]);
 
             if (result.length) {
                 this.state.selectedPartner = result[0];
                 this.confirm();
-            } else {
-                await this.showPopup('ErrorPopup', {
-                    title: 'NIT',
-                    body: this.env._t('El NIT no fue encontrado'),
-                });
             }
         }
         return result;

@@ -20,8 +20,8 @@ class PosOrder(models.Model):
 
     def _prepare_invoice_vals(self):
         res = super(PosOrder, self)._prepare_invoice_vals()
-        if self.pedido_origen_id and self.pedido_origen_id.account_move:
-            res['factura_original_id'] = self.pedido_origen_id.account_move.id
+        if self.refunded_order_ids and self.refunded_order_ids.account_move:
+            res['factura_original_id'] = self.refunded_order_ids.account_move.id
             res['motivo_fel'] = 'Anulación'
         return res
 

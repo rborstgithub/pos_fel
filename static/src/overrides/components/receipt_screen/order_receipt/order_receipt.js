@@ -1,31 +1,36 @@
 /** @odoo-module */
 
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
-
 import { formatDateTime } from "@web/core/l10n/dates";
-
+import { useService } from "@web/core/utils/hooks";
+import { patch } from "@web/core/utils/patch";
 import { onWillStart } from "@odoo/owl";
 
 patch(OrderReceipt.prototype, {
     setup() {
         super.setup();
-        this._fel = {firma_fel: '', serie_fel: '', numero_fel: '', certificador_fel: '', fecha_pedido: '', precio_total_descuento: 0};
+        this.orm = useService("orm");
+        this._fel = {
+            firma_fel: '',
+            serie_fel: '',
+            numero_fel: '',
+            certificador_fel: '',
+            precio_total_descuento: 0,
+        };
         
         onWillStart(async () => {
-            const env = this.receiptEnv;
             const fel = this._fel;
-            const orderlines = this._receiptEnv.orderlines;
+            const orderlines = this.props.data.orderlines;
 
-            const [order] = await this.rpc(
-                {
-                    model: 'pos.order',
-                    method: 'search_read',
-                    args: [[['pos_reference', '=', env.order.name]], ["firma_fel", "serie_fel", "numero_fel", "certificador_fel", "date_order"]],
-                },
-                {
-                    timeout: 5000,
-                    shadow: true,
-                }
+            const [order] = await this.orm.searchRead(
+                "pos.order",
+                [['pos_reference', '=', this.props.data.name]],
+                [
+                    "firma_fel",
+                    "serie_fel",
+                    "numero_fel",
+                    "certificador_fel",
+                ],
             );
 
             if (order) {
@@ -33,7 +38,6 @@ patch(OrderReceipt.prototype, {
                 fel.serie_fel = order.serie_fel;
                 fel.numero_fel = order.numero_fel;
                 fel.certificador_fel = order.certificador_fel;
-                fel.fecha_pedido = formatDateTime(order.date_order);
 
                 let precio_total_descuento = 0;
                 let precio_total_positivo = 0;

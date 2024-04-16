@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+import logging
+
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
@@ -17,21 +19,21 @@ class PosSession(models.Model):
 
         return super(PosSession, self).action_pos_session_validate(balancing_account, amount_to_balance, bank_payment_method_diffs)
 
-    def crear_partner_con_datos_sat(self, datos_cliente):
-        query = datos_cliente[0]
-        company_id = datos_cliente[1]
-
+    @api.model
+    def crear_partner_con_datos_sat(self, query, company_id):
         company_id = self.env['res.company'].search([('id','=',company_id)])
 
         if company_id:
             datos_facturacion_fel = self.env['res.partner']._datos_sat(company_id, query)
-            
-            partner_dic = {
-                'name': datos_facturacion_fel['nombre'],
-                'vat': datos_facturacion_fel['nit'],
-            }
-            partner = self.env['res.partner'].create(partner_dic)
-            params = self._loader_params_res_partner()
-            return partner.read(params['search_params']['fields'])
+            if datos_facturacion_fel['nombre']:
+                partner_dic = {
+                    'name': datos_facturacion_fel['nombre'],
+                    'vat': datos_facturacion_fel['nit'],
+                }
+                partner = self.env['res.partner'].create(partner_dic)
+                params = self._loader_params_res_partner()
+                return partner.read(params['search_params']['fields'])
+            else:
+                return []
         else:
             return []

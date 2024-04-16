@@ -1,50 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     
-    <t t-name="pos_fel.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+    <t t-name="pos_fel.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
         <!-- Información requerida por la SAT -->
         <xpath expr="//*[@class='pos-receipt-contact']" position="after">
             <div class="pos-receipt-contact" style="font-size: 100%;">
-                <t t-esc="receipt.company.name"/><br/>
-                NIT: <t t-esc="receipt.company.vat"/><br/>
+                <t t-esc="props.data.company.name"/><br/>
+                NIT: <t t-esc="props.data.company.vat"/><br/>
                 <br/>
-                <t t-if="env.pos.diario_facturacion">
-                    <t t-esc="env.pos.diario_facturacion.nombre"/><br/>
-                    <t t-esc="env.pos.diario_facturacion.direccion"/><br/>
-                    <t t-esc="env.pos.diario_facturacion.phone or ''"/><br/>
-                </t>
+                <t t-esc="props.data.diario_factura_nombre or ''"/><br/>
+                <t t-esc="props.data.diario_factura_direccion or ''"/><br/>
+                <t t-esc="props.data.diario_factura_tel or ''"/><br/>
+            </div>
+        </xpath>
+    </t>
+
+    <t t-name="pos_fel.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
+        <!-- Para las facturas que tienen negativos -->
+        <xpath expr="//ReceiptHeader" position="after">
+            <div class="datos_factura">
+                Fecha: <t t-esc="props.data.date"/><br/>
+                Empleado: <t t-esc="props.data.cashier"/><br/>
                 <br/>
-                <t t-if="fel.firma_fel">
-                    Documento Tributario Electrónico FEL<br/>
-                    Factura Electrónica<br/>
-                    Serie: <t t-esc="fel.serie_fel || ''"/><br/>
-                    Número: <t t-esc="fel.numero_fel || ''"/><br/>
-                </t>
-                <br/>
-                <div class="datos_factura">
-                    Fecha: <t t-esc="fel.fecha_pedido"/><br/>
-                    Empleado: <t t-esc="receipt.cashier"/><br/>
-                    <t t-if="receipt.partner">
-                        <br/>
-                        NIT: <t t-esc="receipt.partner.vat ? receipt.partner.vat : 'CF'"/><br/>
-                        Nombre: <t t-esc="receipt.partner.name"/><br/>
-                        Dirección: <t t-esc="receipt.partner.street"/><br/><br/>
-                    </t>
-                </div>
+                NIT: <t t-esc="props.data.partner.vat ? props.data.partner.vat : 'CF'"/><br/>
+                Nombre: <t t-esc="props.data.partner.name"/><br/>
+                Dirección: <t t-esc="props.data.partner.street"/><br/><br/>
             </div>
         </xpath>
 
         <!-- Para las facturas que tienen negativos -->
         <xpath expr="//*[@class='pos-receipt-amount']" position="before">
             <div>
-                <div>Subtotal: <span t-esc='env.pos.format_currency_no_symbol(receipt.total_with_tax + fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
-                <div>Descuento: <span t-esc='env.pos.format_currency_no_symbol(fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
+                <div>Subtotal: <span t-esc='props.formatCurrency(props.data.amount_total + fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
+                <div>Descuento: <span t-esc='props.formatCurrency(fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
             </div>
         </xpath>
         
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <br/>
+            <t t-if="fel.firma_fel">
+                Documento Tributario Electrónico FEL<br/>
+                Factura Electrónica<br/>
+                Serie: <t t-esc="fel.serie_fel || ''"/><br/>
+                Número: <t t-esc="fel.numero_fel || ''"/><br/>
+                Autorización: <t t-esc="fel.firma_fel || ''"/><br/>
+                Fecha Certificación: <t t-esc="props.data.date"/>
+            </t>
             <t t-if="fel.certificador_fel == 'infile' || !fel.certificador_fel">
                 Certificador<br/>
                 INFILE, S.A.<br/>
@@ -85,11 +87,7 @@
                 Grupo CDS, S.A.<br/>
                 NIT: 107902281<br/>
             </t>
-            <t t-if="fel.firma_fel">
-                Autorización: <t t-esc="fel.firma_fel || ''"/><br/>
-                Fecha Certificación: <t t-esc="fel.fecha_pedido"/>
-            </t>
-            <div t-if='!receipt.footer and !receipt.footer_html'>
+            <div t-if='!props.data.footer'>
                 Sujeto a pagos trimestrales ISR<br/>
             </div>
         </xpath>
