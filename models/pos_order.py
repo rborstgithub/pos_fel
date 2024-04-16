@@ -30,5 +30,8 @@ class PosOrder(models.Model):
         if self.pedido_origen_id and self.pedido_origen_id.account_move:
             res['factura_original_id'] = self.pedido_origen_id.account_move.id
             res['motivo_fel'] = 'Anulación'
+        if self.refunded_order_ids and self.refunded_order_ids[0].account_move:
+            res['factura_original_id'] = self.refunded_order_ids[0].account_move.id
+            res['motivo_fel'] = 'Anulación'
         return res
 
