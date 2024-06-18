@@ -3,15 +3,11 @@
     
     <t t-name="pos_fel.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
         <!-- Información requerida por la SAT -->
-        <xpath expr="//*[@class='pos-receipt-contact']" position="after">
-            <div class="pos-receipt-contact" style="font-size: 100%;">
-                <t t-esc="props.data.company.name"/><br/>
-                NIT: <t t-esc="props.data.company.vat"/><br/>
-                <br/>
-                <t t-esc="props.data.diario_factura_nombre or ''"/><br/>
-                <t t-esc="props.data.diario_factura_direccion or ''"/><br/>
-                <t t-esc="props.data.diario_factura_tel or ''"/><br/>
-            </div>
+        <xpath expr="//*[@class='cashier']" position="before">
+            <br /><br />
+            <t t-esc="props.data.diario_factura_nombre or ''"/><br/>
+            <t t-esc="props.data.diario_factura_direccion or ''"/><br/>
+            <t t-esc="props.data.diario_factura_tel or ''"/><br/>
         </xpath>
     </t>
 
