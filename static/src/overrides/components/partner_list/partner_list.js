@@ -2,7 +2,6 @@
  
 import { PartnerListScreen } from "@point_of_sale/app/screens/partner_list/partner_list";
 import { useService } from "@web/core/utils/hooks";
-import { ErrorPopup } from "@point_of_sale/app/errors/popups/error_popup";
 import { patch } from "@web/core/utils/patch";
 
 patch(PartnerListScreen.prototype, {
@@ -10,7 +9,6 @@ patch(PartnerListScreen.prototype, {
         super.setup();
         this.orm = useService("orm");
     },
-
     async getNewPartners() {
         let result = await super.getNewPartners();
         if (!result.length) {

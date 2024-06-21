@@ -12,7 +12,6 @@
     </t>
 
     <t t-name="pos_fel.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
-        <!-- Para las facturas que tienen negativos -->
         <xpath expr="//ReceiptHeader" position="after">
             <div class="datos_factura">
                 Fecha: <t t-esc="props.data.date"/><br/>

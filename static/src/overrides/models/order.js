@@ -10,7 +10,6 @@ patch(Order.prototype, {
     export_for_printing() {
         const result = super.export_for_printing(...arguments);
         result.fel = this.fel;
-        console.log(this.fel);
         return result;
     }
 })

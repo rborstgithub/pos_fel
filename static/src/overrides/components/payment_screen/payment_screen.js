@@ -8,7 +8,6 @@ patch(PaymentScreen.prototype, {
         return false;
     },
     async _postPushOrderResolve(order, order_server_ids) {
-        console.log(order_server_ids);        
         const [savedOrder] = await this.orm.searchRead(
             "pos.order",
             [["id", "in", order_server_ids]],
@@ -28,7 +27,6 @@ patch(PaymentScreen.prototype, {
             precio_total_descuento: 0,
         }
 
-        console.log(savedOrder);
         if (savedOrder) {
             order.fel.firma_fel = savedOrder.firma_fel;
             order.fel.serie_fel = savedOrder.serie_fel;
