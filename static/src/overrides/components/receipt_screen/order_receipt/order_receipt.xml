@@ -27,58 +27,58 @@
         <!-- Para las facturas que tienen negativos -->
         <xpath expr="//*[@class='pos-receipt-amount']" position="before">
             <div>
-                <div>Subtotal: <span t-esc='props.formatCurrency(props.data.amount_total + fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
-                <div>Descuento: <span t-esc='props.formatCurrency(fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
+                <div>Subtotal: <span t-esc='props.formatCurrency(props.data.amount_total + props.data.fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
+                <div>Descuento: <span t-esc='props.formatCurrency(props.data.fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
             </div>
         </xpath>
         
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <br/>
-            <t t-if="fel.firma_fel">
+            <t t-if="props.data.fel.firma_fel">
                 Documento Tributario Electrónico FEL<br/>
                 Factura Electrónica<br/>
-                Serie: <t t-esc="fel.serie_fel || ''"/><br/>
-                Número: <t t-esc="fel.numero_fel || ''"/><br/>
-                Autorización: <t t-esc="fel.firma_fel || ''"/><br/>
+                Serie: <t t-esc="props.data.fel.serie_fel || ''"/><br/>
+                Número: <t t-esc="props.data.fel.numero_fel || ''"/><br/>
+                Autorización: <t t-esc="props.data.fel.firma_fel || ''"/><br/>
                 Fecha Certificación: <t t-esc="props.data.date"/>
             </t>
-            <t t-if="fel.certificador_fel == 'infile' || !fel.certificador_fel">
+            <t t-if="props.data.fel.certificador_fel == 'infile' || !props.data.fel.certificador_fel">
                 Certificador<br/>
                 INFILE, S.A.<br/>
                 NIT: 12521337<br/>
             </t>
-            <t t-if="fel.certificador_fel == 'g4s'">
+            <t t-if="props.data.fel.certificador_fel == 'g4s'">
                 Certificador<br/>
                 G4S DOCUMENTA, S. A.<br/>
                 NIT: 60010207<br/>
             </t>
-            <t t-if="fel.certificador_fel == 'gom'">
+            <t t-if="props.data.fel.certificador_fel == 'gom'">
                 Certificador<br/>
                 GOM SOLUTIONS, SOCIEDAD ANONIMA<br/>
                 NIT: 95189416<br/>
             </t>
-            <t t-if="fel.certificador_fel == 'ecofactura'">
+            <t t-if="props.data.fel.certificador_fel == 'ecofactura'">
                 Certificador<br/>
                 ECO-FACTURAS<br/>
                 NIT: 64281167<br/>
             </t>
-            <t t-if="fel.certificador_fel == 'digifact'">
+            <t t-if="props.data.fel.certificador_fel == 'digifact'">
                 Certificador<br/>
                 DIGIFACT SERVICIOS, SOCIEDAD ANONIMA<br/>
                 NIT: 77454820<br/>
             </t>
-            <t t-if="fel.certificador_fel == 'ccg'">
+            <t t-if="props.data.fel.certificador_fel == 'ccg'">
                 Certificador<br/>
                 Cámara de Comercio de Guatemala<br/>
                 NIT: 351598<br/>
             </t>
-            <t t-if="fel.certificador_fel == 'megaprint'">
+            <t t-if="props.data.fel.certificador_fel == 'megaprint'">
                 Certificador<br/>
                 MEGAPRINT, S.A.<br/>
                 NIT: 50510231<br/>
             </t>
-            <t t-if="fel.certificador_fel == 'totaldoc'">
+            <t t-if="props.data.fel.certificador_fel == 'totaldoc'">
                 Certificador<br/>
                 Grupo CDS, S.A.<br/>
                 NIT: 107902281<br/>

@@ -1,5 +1,6 @@
 /** @odoo-module */
 
+/*
 import { OrderReceipt } from "@point_of_sale/app/screens/receipt_screen/receipt/order_receipt";
 import { formatDateTime } from "@web/core/l10n/dates";
 import { useService } from "@web/core/utils/hooks";
@@ -8,6 +9,7 @@ import { onWillStart } from "@odoo/owl";
 
 patch(OrderReceipt.prototype, {
     setup() {
+        console.debug('setup');
         super.setup();
         this.orm = useService("orm");
         this._fel = {
@@ -17,8 +19,10 @@ patch(OrderReceipt.prototype, {
             certificador_fel: '',
             precio_total_descuento: 0,
         };
-        
+
         onWillStart(async () => {
+            console.debug('onWillStart');
+            console.debug(this);
             const fel = this._fel;
             const orderlines = this.props.data.orderlines;
 
@@ -32,6 +36,8 @@ patch(OrderReceipt.prototype, {
                     "certificador_fel",
                 ],
             );
+            let order = {};
+            console.debug(order);
 
             if (order) {
                 fel.firma_fel = order.firma_fel;
@@ -70,3 +76,4 @@ patch(OrderReceipt.prototype, {
         return this._fel;
     }
 });
+*/
