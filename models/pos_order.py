@@ -26,7 +26,7 @@ class PosOrder(models.Model):
         numero_acceso_fel = partes[0]+partes[2];
         numero_acceso_fel = int(re.sub(r'[^\d]+', '', numero_acceso_fel));
         
-        res['numero_acceso_fel'] = numero_acceso_fel+40000000
+        res['numero_acceso_fel'] = numero_acceso_fel+140000000
         if self.pedido_origen_id and self.pedido_origen_id.account_move:
             res['factura_original_id'] = self.pedido_origen_id.account_move.id
             res['motivo_fel'] = 'Anulación'
