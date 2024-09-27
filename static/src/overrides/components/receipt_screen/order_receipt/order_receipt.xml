@@ -18,8 +18,8 @@
                 Empleado: <t t-esc="props.data.cashier"/><br/>
                 <br/>
                 NIT: <t t-esc="props.data.partner.vat ? props.data.partner.vat : 'CF'"/><br/>
-                Nombre: <t t-esc="props.data.partner.name"/><br/>
-                Dirección: <t t-esc="props.data.partner.street"/><br/><br/>
+                Nombre: <t t-esc="props.data.partner.name or ''"/><br/>
+                Dirección: <t t-esc="props.data.partner.street or ''"/><br/><br/>
             </div>
         </xpath>
 
