@@ -19,6 +19,12 @@ class PosSession(models.Model):
 
         return super(PosSession, self).action_pos_session_validate(balancing_account, amount_to_balance, bank_payment_method_diffs)
 
+    def _loader_params_res_partner(self):
+        params = super()._loader_params_res_partner()
+        params['search_params']['fields'].append('nombre_facturacion_fel')
+        params['search_params']['fields'].append('nit_facturacion_fel')
+        return params
+
     @api.model
     def crear_partner_con_datos_sat(self, query, company_id):
         company_id = self.env['res.company'].search([('id','=',company_id)])

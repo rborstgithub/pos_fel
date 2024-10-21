@@ -17,8 +17,8 @@
                 Fecha: <t t-esc="props.data.date"/><br/>
                 Empleado: <t t-esc="props.data.cashier"/><br/>
                 <br/>
-                NIT: <t t-esc="props.data.partner.vat ? props.data.partner.vat : 'CF'"/><br/>
-                Nombre: <t t-esc="props.data.partner.name or ''"/><br/>
+                NIT: <t t-esc="props.data.partner.nit_facturacion_fel or props.data.partner.vat or 'CF'"/><br/>
+                Nombre: <t t-esc="props.data.partner.nombre_facturacion_fel or props.data.partner.name or 'CONSUMIDOR FINAL'"/><br/>
                 Dirección: <t t-esc="props.data.partner.street or ''"/><br/><br/>
             </div>
         </xpath>
