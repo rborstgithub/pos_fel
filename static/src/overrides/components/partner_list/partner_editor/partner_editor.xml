@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_fel.PartnerDetailsEdit" t-inherit="point_of_sale.PartnerDetailsEdit" t-inherit-mode="extension">
+        <xpath expr="//div[hasclass('partner-details-box')]" position="inside">
+            <div class="partner-detail col">
+                <label class="form-label label" for="nombre_facturacion_fel">Nombre FEL</label>
+                <input class="detail nombre_facturacion_fel form-control" id="nombre_facturacion_fel" name="nombre_facturacion_fel" t-model="changes.nombre_facturacion_fel" t-att-class="{'border-danger': missingFields.includes('nombre_facturacion_fel')}" />
+            </div>
+            <div class="partner-detail col">
+                <label class="form-label label" for="nit_facturacion_fel">NIT FEL</label>
+                <input class="detail nit_facturacion_fel form-control" id="nit_facturacion_fel" name="nit_facturacion_fel" t-model="changes.nit_facturacion_fel" t-att-class="{'border-danger': missingFields.includes('nit_facturacion_fel')}" />
+            </div>
+        </xpath>
+    </t>
+</templates>
