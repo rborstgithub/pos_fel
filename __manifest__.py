@@ -8,7 +8,7 @@
     'summary': 'Point of Sale unido a facturacion electrónica',
     'description': """ Cambios al Punto de Venta para generar facturas electrónicas fácilmente """,
     'website': 'http://aquih.com',
-    'author': 'Rodrigo Fernandez',
+    'author': 'aquíH',
     'depends': ['point_of_sale', 'fel_gt'],
     'data': [
         'views/report.xml',

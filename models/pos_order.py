@@ -10,6 +10,10 @@ class PosOrder(models.Model):
     serie_fel = fields.Char('Serie FEL', related='account_move.serie_fel')
     numero_fel = fields.Char('Numero FEL', related='account_move.numero_fel')
     certificador_fel = fields.Char('Certificador FEL', related='account_move.certificador_fel')
+
+    def _generate_pos_order_invoice(self):
+        self = self.with_context(generate_pdf=False)
+        return super(PosOrder, self)._generate_pos_order_invoice()
     
     def _get_invoice_lines_values(self, line_values, pos_order_line):
         res = super(PosOrder, self)._get_invoice_lines_values(line_values, pos_order_line)
