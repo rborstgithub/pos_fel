@@ -33,11 +33,10 @@
         
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
-            <div>
-                <br/>
+            Documento Tributario Electrónico FEL<br/>
+            Factura Electrónica<br/>
+            <div t-if="props.data.fel.firma_fel">
                 <t t-if="props.data.fel.firma_fel">
-                    Documento Tributario Electrónico FEL<br/>
-                    Factura Electrónica<br/>
                     Serie: <t t-esc="props.data.fel.serie_fel || ''"/><br/>
                     Número: <t t-esc="props.data.fel.numero_fel || ''"/><br/>
                     Autorización: <t t-esc="props.data.fel.firma_fel || ''"/><br/>
@@ -83,11 +82,14 @@
                     Grupo CDS, S.A.<br/>
                     NIT: 107902281<br/>
                 </t>
-                <t t-if='!props.data.footer'>
-                    <br/>
-                    Sujeto a pagos trimestrales ISR<br/>
-                </t>
             </div>
+            <div t-if="!props.data.fel.firma_fel">
+                Documento en Contingencia<br/>
+                Número de Acceso: <span t-esc="props.data.fel.numero_acceso_fel"/>
+            </div>
+            <t t-if='!props.data.footer'>
+                Sujeto a pagos trimestrales ISR<br/>
+            </t>
         </xpath>
      </t>
      

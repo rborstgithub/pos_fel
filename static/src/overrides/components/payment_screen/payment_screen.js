@@ -19,15 +19,7 @@ patch(PaymentScreen.prototype, {
             ],
         );
 
-        order.fel = {
-            firma_fel: '',
-            serie_fel: '',
-            numero_fel: '',
-            certificador_fel: '',
-            precio_total_descuento: 0,
-        }
-
-        if (savedOrder) {
+        if (savedOrder && savedOrder.firma_fel) {
             order.fel.firma_fel = savedOrder.firma_fel;
             order.fel.serie_fel = savedOrder.serie_fel;
             order.fel.numero_fel = savedOrder.numero_fel;
