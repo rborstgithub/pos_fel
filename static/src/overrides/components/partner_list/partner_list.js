@@ -12,7 +12,7 @@ patch(PartnerListScreen.prototype, {
     async getNewPartners() {
         let result = await super.getNewPartners();
         if (!result.length) {
-            result = await this.orm.silent.call("pos.session", "crear_partner_con_datos_sat", [this.state.query, this.pos.company.id]);
+            result = await this.orm.silent.call("pos.session", "crear_partner_con_datos_sat", [this.pos.company.id, this.state.query]);
 
             if (result.length) {
                 this.state.selectedPartner = result[0];
