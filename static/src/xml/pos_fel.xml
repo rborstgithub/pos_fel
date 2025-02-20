@@ -5,6 +5,9 @@
         <!-- Información requerida por la SAT -->
         <xpath expr="//*[@class='pos-receipt-contact']" position="after">
             <div class="pos-receipt-contact" style="font-size: 100%;">
+                <t t-if="fel.usuario">
+                    Usuario facturador: <t t-esc="fel.usuario"/><br/>
+                </t>
                 <t t-esc="receipt.company.name"/><br/>
                 NIT: <t t-esc="receipt.company.vat"/><br/>
                 <br/>
@@ -24,10 +27,13 @@
                 <div class="datos_factura">
                     Fecha: <t t-esc="fel.fecha_pedido"/><br/>
                     Empleado: <t t-esc="receipt.cashier"/><br/>
+                    <t t-if="fel.comercial">
+                        Asesor: <t t-esc="fel.comercial"/><br/>
+                    </t>
                     <t t-if="receipt.partner">
                         <br/>
-                        NIT: <t t-esc="receipt.partner.vat ? receipt.partner.vat : 'CF'"/><br/>
-                        Nombre: <t t-esc="receipt.partner.name"/><br/>
+                        NIT: <t t-esc="receipt.partner.nit_facturacion_fel ? receipt.partner.nit_facturacion_fel : 'CF'"/><br/>
+                        Nombre: <t t-esc="receipt.partner.nombre_facturacion_fel"/><br/>
                         Dirección: <t t-esc="receipt.partner.street"/><br/><br/>
                     </t>
                 </div>
@@ -44,6 +50,8 @@
         
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
+            Placa: <t t-esc="receipt.partner.x_studio_placa"/>
+            <br/>
             <br/>
             <t t-if="fel.certificador_fel == 'infile' || !fel.certificador_fel">
                 Certificador<br/>
