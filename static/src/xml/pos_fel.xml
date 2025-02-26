@@ -5,9 +5,6 @@
         <!-- Información requerida por la SAT -->
         <xpath expr="//*[@class='pos-receipt-contact']" position="after">
             <div class="pos-receipt-contact" style="font-size: 100%;">
-                <t t-esc="receipt.company.name"/><br/>
-                NIT: <t t-esc="receipt.company.vat"/><br/>
-                <br/>
                 <t t-if="env.pos.invoice_journal_address">
                     <t t-esc="env.pos.invoice_journal_address.name"/><br/>
                     <t t-esc="env.pos.invoice_journal_address.street"/><br/>
@@ -27,7 +24,6 @@
                 <br/>
                 <div class="datos_factura">
                     Fecha: <t t-esc="fel.fecha_pedido"/><br/>
-                    Empleado: <t t-esc="receipt.cashier"/><br/>
                     <t t-if="receipt.client">
                         <br/>
                         NIT: <t t-esc="receipt.client.vat ? receipt.client.vat : 'CF'"/><br/>
