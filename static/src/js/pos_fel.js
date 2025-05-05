@@ -38,7 +38,7 @@ odoo.define('pos_fel.pos_fel', function (require) {
                 var numero_acceso_fel = partes[0]+partes[2];
                 numero_acceso_fel = parseInt(numero_acceso_fel.replace(/[^\d]+/, ''));
 
-                fel.numero_acceso_fel = numero_acceso_fel+400000000;
+                fel.numero_acceso_fel = numero_acceso_fel+140000000;
 
                 if (order) {
                     fel.firma_fel = order.firma_fel;
