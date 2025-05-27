@@ -1,10 +1,10 @@
 /** @odoo-module */
  
-import { PartnerListScreen } from "@point_of_sale/app/screens/partner_list/partner_list";
+import { PartnerList } from "@point_of_sale/app/screens/partner_list/partner_list";
 import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 
-patch(PartnerListScreen.prototype, {
+patch(PartnerList.prototype, {
     setup() {
         super.setup();
         this.orm = useService("orm");
