@@ -19,19 +19,11 @@ class PosSession(models.Model):
 
         return super(PosSession, self).action_pos_session_validate(balancing_account, amount_to_balance, bank_payment_method_diffs)
 
-    def _loader_params_res_partner(self):
-        params = super()._loader_params_res_partner()
-        params['search_params']['fields'].append('nombre_facturacion_fel')
-        params['search_params']['fields'].append('nit_facturacion_fel')
-        return params
-
     @api.model
     def crear_partner_con_datos_sat(self, company_id, vat):
         if company_id:
             company = self.env['res.company'].search([('id','=',company_id)])
             partners = self.env['res.partner'].search([('vat','=',vat)])
-
-            params = self._loader_params_res_partner()
 
             # Si el partner no existe se crea y si ya existe, se devuelve el que ya existe
             if len(partners) == 0:
@@ -42,10 +34,10 @@ class PosSession(models.Model):
                         'vat': datos_facturacion_fel['nit'],
                     }
                     new_partner = self.env['res.partner'].create(partner_dic)
-                    return new_partner.read(params['search_params']['fields'])
+                    return new_partner.read([])
                 else:
                     return []
             else:
-                return partners.read(params['search_params']['fields'])
+                return partners.read([])
         else:
             return []

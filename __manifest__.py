@@ -2,7 +2,7 @@
 
 {
     'name': 'Point of Sale unido a facturacion electrónica',
-    'version': '1.2',
+    'version': '1.3',
     'category': 'Point of Sale',
     'sequence': 6,
     'summary': 'Point of Sale unido a facturacion electrónica',
@@ -10,10 +10,7 @@
     'website': 'http://aquih.com',
     'author': 'aquíH',
     'depends': ['point_of_sale', 'fel_gt'],
-    'data': [
-        'views/report.xml',
-        'views/pos_order_ticket.xml',
-    ],
+    'data': [],
     'installable': True,
     'auto_install': False,
     'assets': {

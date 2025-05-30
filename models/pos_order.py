@@ -29,16 +29,7 @@ class PosOrder(models.Model):
         res = super(PosOrder, self)._prepare_invoice_vals()    
         res['numero_acceso_fel'] = self.numero_acceso_fel
         res['contingencia_fel'] = self.contingencia_fel
-        if self.refunded_order_ids and self.refunded_order_ids.account_move:
-            res['factura_original_id'] = self.refunded_order_ids.account_move.id
+        if self.refunded_order_id and self.refunded_order_id.account_move:
+            res['factura_original_id'] = self.refunded_order_id.account_move.id
             res['motivo_fel'] = 'Anulación'
-        return res
-
-    @api.model
-    def _order_fields(self, ui_order):
-        res = super(PosOrder, self)._order_fields(ui_order)
-        if ui_order.get('numero_acceso_fel'):
-            res.update({'numero_acceso_fel': ui_order['numero_acceso_fel']})
-        if ui_order.get('contingencia_fel'):
-            res.update({'contingencia_fel': ui_order['contingencia_fel']})
         return res

@@ -8,7 +8,7 @@ patch(PaymentScreen.prototype, {
         return false;
     },
     async _postPushOrderResolve(order, order_server_ids) {
-        const [savedOrder] = await this.orm.searchRead(
+        const [savedOrder] = await this.pos.data.searchRead(
             "pos.order",
             [["id", "in", order_server_ids]],
             [
@@ -20,10 +20,10 @@ patch(PaymentScreen.prototype, {
         );
 
         if (savedOrder && savedOrder.firma_fel) {
-            order.fel.firma_fel = savedOrder.firma_fel;
-            order.fel.serie_fel = savedOrder.serie_fel;
-            order.fel.numero_fel = savedOrder.numero_fel;
-            order.fel.certificador_fel = savedOrder.certificador_fel;
+            order.firma_fel = savedOrder.firma_fel;
+            order.serie_fel = savedOrder.serie_fel;
+            order.numero_fel = savedOrder.numero_fel;
+            order.certificador_fel = savedOrder.certificador_fel;
 
             let precio_total_descuento = 0;
             let precio_total_positivo = 0;
@@ -36,7 +36,7 @@ patch(PaymentScreen.prototype, {
                 }
             });
 
-            order.fel.precio_total_descuento = precio_total_descuento;
+            order.precio_total_descuento = precio_total_descuento;
             
             let descuento_porcentaje_fel = precio_total_descuento / precio_total_positivo;
             order.get_orderlines().forEach(function(linea) {
