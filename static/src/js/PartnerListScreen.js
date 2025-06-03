@@ -18,6 +18,7 @@ odoo.define('pos_fel.PartnerListScreen', function (require) {
                 });
 
                 if (result.length) {
+                    this.env.pos.addPartners(result);
                     this.state.selectedPartner = result[0];
                     this.confirm();
                 } else {
