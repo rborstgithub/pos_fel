@@ -20,6 +20,7 @@ odoo.define('pos_fel.ClientListScreen', function (require) {
                 });
 
                 if (result.length) {
+                    this.env.pos.db.add_partners(result);
                     this.state.selectedClient = result[0];
                     this.clickNext();
                 } else {

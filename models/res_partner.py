@@ -21,15 +21,20 @@ class Partner(models.Model):
         company_id = datos_cliente[2]
 
         company_id = self.env['res.company'].search([('id','=',company_id)])
+        partners = self.env['res.partner'].search([('vat','=',query)])
 
         if company_id:
-            datos_facturacion_fel = self._datos_sat(company_id, query)
-            
-            partner_dic = {
-                'name': datos_facturacion_fel['nombre'],
-                'vat': datos_facturacion_fel['nit'],
-            }
-            partner = self.create(partner_dic)
-            return partner.read(fields)
+            # Si el partner no existe se crea y si ya existe, se devuelve el que ya existe
+            if len(partners) == 0:
+                datos_facturacion_fel = self._datos_sat(company_id, query)
+                
+                partner_dic = {
+                    'name': datos_facturacion_fel['nombre'],
+                    'vat': datos_facturacion_fel['nit'],
+                }
+                partner = self.create(partner_dic)
+                return partner.read(fields)
+            else:
+                return partners.read(fields)
         else:
             return []
