@@ -22,16 +22,21 @@ class PosSession(models.Model):
         company_id = datos_cliente[1]
 
         company_id = self.env['res.company'].search([('id','=',company_id)])
+        partners = self.env['res.partner'].search([('vat','=',query)])
 
         if company_id:
-            datos_facturacion_fel = self.env['res.partner']._datos_sat(company_id, query)
-            
-            partner_dic = {
-                'name': datos_facturacion_fel['nombre'],
-                'vat': datos_facturacion_fel['nit'],
-            }
-            partner = self.env['res.partner'].create(partner_dic)
-            params = self._loader_params_res_partner()
-            return partner.read(params['search_params']['fields'])
+            # Si el partner no existe se crea y si ya existe, se devuelve el que ya existe
+            if len(partners) == 0:
+                datos_facturacion_fel = self.env['res.partner']._datos_sat(company_id, query)
+                
+                partner_dic = {
+                    'name': datos_facturacion_fel['nombre'],
+                    'vat': datos_facturacion_fel['nit'],
+                }
+                partner = self.env['res.partner'].create(partner_dic)
+                params = self._loader_params_res_partner()
+                return partner.read(params['search_params']['fields'])
+            else:
+                return partners.read(params['search_params']['fields'])
         else:
             return []
