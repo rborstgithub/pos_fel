@@ -2,7 +2,7 @@
 
 {
     'name': 'Point of Sale unido a facturacion electrónica',
-    'version': '2.3',
+    'version': '2.4',
     'category': 'Point of Sale',
     'sequence': 6,
     'summary': 'Point of Sale unido a facturacion electrónica',
