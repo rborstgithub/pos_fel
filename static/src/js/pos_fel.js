@@ -10,8 +10,8 @@ odoo.define('pos_fel.pos_fel', function (require) {
     const PosFELOrderReceipt = (OrderReceipt) => class PosFELOrderReceipt extends OrderReceipt {
         setup() {
             super.setup();
-            this._fel = {firma_fel: '', serie_fel: '', numero_fel: '', certificador_fel: '', fecha_pedido: '', precio_total_descuento: 0};
-            
+            this._fel = {firma_fel: '', serie_fel: '', numero_fel: '', certificador_fel: '', fecha_pedido: '', precio_total_descuento: 0, usuario: '', comercial: ''};
+
             onWillStart(async () => {
                 const env = this.receiptEnv;
                 const fel = this._fel;
@@ -21,7 +21,7 @@ odoo.define('pos_fel.pos_fel', function (require) {
                     {
                         model: 'pos.order',
                         method: 'search_read',
-                        args: [[['pos_reference', '=', env.order.name]], ["firma_fel", "serie_fel", "numero_fel", "certificador_fel", "date_order"]],
+                        args: [[['pos_reference', '=', env.order.name]], ["firma_fel", "serie_fel", "numero_fel", "certificador_fel", "date_order", "usuario", "comercial"]],
                     },
                     {
                         timeout: 5000,
@@ -35,6 +35,8 @@ odoo.define('pos_fel.pos_fel', function (require) {
                     fel.numero_fel = order.numero_fel;
                     fel.certificador_fel = order.certificador_fel;
                     fel.fecha_pedido = format.datetime(moment(order.date_order), {}, {timezone: true});
+                    fel.usuario = order.usuario;
+                    fel.comercial = order.comercial;
     
                     let precio_total_descuento = 0;
                     let precio_total_positivo = 0;
