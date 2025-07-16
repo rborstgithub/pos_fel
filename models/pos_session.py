@@ -35,7 +35,7 @@ class PosSession(models.Model):
 
             # Si el partner no existe se crea y si ya existe, se devuelve el que ya existe
             if len(partners) == 0:
-                datos_facturacion_fel = self.env['res.partner']._datos_sat(company, vat)
+                datos_facturacion_fel = self.env['res.partner'].obtener_datos_facturacion_fel(company, vat)
                 if datos_facturacion_fel['nombre'] and datos_facturacion_fel['nit']:
                     partner_dic = {
                         'name': datos_facturacion_fel['nombre'],
