@@ -8,7 +8,7 @@ from odoo.exceptions import UserError, ValidationError
 class PosSession(models.Model):
     _inherit = 'pos.session'
 
-    def action_posaction_pos_session_close_session_closing_control(self, balancing_account=False, amount_to_balance=0, bank_payment_method_diffs=None):
+    def action_pos_session_close(self, balancing_account=False, amount_to_balance=0, bank_payment_method_diffs=None):
         for session in self:
             if session.config_id.invoice_journal_id and session.config_id.invoice_journal_id.generar_fel:
                 if len(session.order_ids.filtered(lambda order: order.state not in ['invoiced', 'cancel'] and order.amount_total > 0)) > 0:
