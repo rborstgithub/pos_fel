@@ -1,5 +1,6 @@
 /** @odoo-module */
 
+import { uuidv4 } from "@point_of_sale/utils";
 import { patch } from "@web/core/utils/patch";
 import { Order } from "@point_of_sale/app/store/models";
 
@@ -18,6 +19,7 @@ patch(Order.prototype, {
         const max = 999999999;
         const min = 100000000;
         this.fel.numero_acceso_fel = Math.floor(Math.random() * (max - min + 1) + min);
+        this.uuid_pos_fel = uuidv4();
     },
     wait_for_push_order() {
         return true;
@@ -31,6 +33,7 @@ patch(Order.prototype, {
         const json = super.export_as_JSON(...arguments);
         json.numero_acceso_fel = this.fel.numero_acceso_fel;
         json.contingencia_fel = this.fel.contingencia_fel;
+        json.uuid_pos_fel = this.uuid_pos_fel;
         return json;
     },
 })
