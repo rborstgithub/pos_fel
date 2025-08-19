@@ -8,6 +8,7 @@ class PosOrder(models.Model):
 
     numero_acceso_fel = fields.Integer('Número de Accesso FEL')
     contingencia_fel = fields.Boolean('Contingencia FEL')
+    uuid_pos_fel = fields.Char('UUID FEL', copy=False)
     firma_fel = fields.Char('Firma FEL', related='account_move.firma_fel')
     serie_fel = fields.Char('Serie FEL', related='account_move.serie_fel')
     numero_fel = fields.Char('Numero FEL', related='account_move.numero_fel')
@@ -29,6 +30,7 @@ class PosOrder(models.Model):
         res = super(PosOrder, self)._prepare_invoice_vals()    
         res['numero_acceso_fel'] = self.numero_acceso_fel
         res['contingencia_fel'] = self.contingencia_fel
+        res['uuid_pos_fel'] = self.uuid_pos_fel
         if self.refunded_order_id and self.refunded_order_id.account_move:
             res['factura_original_id'] = self.refunded_order_id.account_move.id
             res['motivo_fel'] = 'Anulación'
