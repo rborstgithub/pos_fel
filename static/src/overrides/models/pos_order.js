@@ -20,7 +20,7 @@ patch(PosOrder.prototype, {
         const result = super.export_for_printing(...arguments);
         result.fel = {}
         result.fel['firma_fel'] = this.firma_fel;
-        result.fel['fel.serie_fel'] = this.serie_fel;
+        result.fel['serie_fel'] = this.serie_fel;
         result.fel['numero_fel'] = this.numero_fel;
         result.fel['certificador_fel'] = this.certificador_fel;
         result.fel['numero_acceso_fel'] = this.numero_acceso_fel;
