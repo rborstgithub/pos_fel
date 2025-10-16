@@ -9,6 +9,7 @@ patch(PosStore.prototype, {
         result.diario_factura_nombre = this.config.diario_factura_nombre
         result.diario_factura_direccion = this.config.diario_factura_direccion
         result.diario_factura_tel = this.config.diario_factura_tel
+        result.is_to_invoice = order.is_to_invoice()
         return result;
     },
 })
