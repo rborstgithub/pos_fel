@@ -4,28 +4,30 @@
     <t t-name="pos_fel.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
         <!-- Información requerida por la SAT -->
         <xpath expr="//*[@class='cashier']" position="before">
-            <br /><br />
-            <t t-esc="props.data.diario_factura_nombre or ''"/><br/>
-            <t t-esc="props.data.diario_factura_direccion or ''"/><br/>
-            <t t-esc="props.data.diario_factura_tel or ''"/><br/>
+            <t t-if="props.data.is_to_invoice">
+                <br /><br />
+                <t t-esc="props.data.diario_factura_nombre or ''"/><br/>
+                <t t-esc="props.data.diario_factura_direccion or ''"/><br/>
+                <t t-esc="props.data.diario_factura_tel or ''"/><br/>
+            </t>
         </xpath>
     </t>
 
     <t t-name="pos_fel.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
         <xpath expr="//ReceiptHeader" position="after">
             <div class="datos_factura">
-                Fecha: <t t-esc="props.data.date"/><br/>
-                Empleado: <t t-esc="props.data.cashier"/><br/>
-                <br/>
-                NIT: <t t-esc="props.data.partner.nit_facturacion_fel or props.data.partner.vat or 'CF'"/><br/>
-                Nombre: <t t-esc="props.data.partner.nombre_facturacion_fel or props.data.partner.name or 'CONSUMIDOR FINAL'"/><br/>
-                Dirección: <t t-esc="props.data.partner.street or ''"/><br/><br/>
+                <t t-if="props.data.is_to_invoice">
+                    Fecha: <t t-esc="props.data.date"/><br/>
+                    NIT: <t t-esc="props.data.partner.nit_facturacion_fel or props.data.partner.vat or 'CF'"/><br/>
+                    Nombre: <t t-esc="props.data.partner.nombre_facturacion_fel or props.data.partner.name or 'CONSUMIDOR FINAL'"/><br/>
+                    Dirección: <t t-esc="props.data.partner.street or ''"/><br/><br/>
+                </t>
             </div>
         </xpath>
 
         <!-- Para las facturas que tienen negativos -->
         <xpath expr="//OrderWidget" position="after">
-            <div t-if="props.data.fel">
+            <div t-if="props.data.fel and props.data.is_to_invoice">
                 <div>Subtotal: <span t-esc='props.formatCurrency(props.data.amount_total + props.data.fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
                 <div>Descuento: <span t-esc='props.formatCurrency(props.data.fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
             </div>
@@ -33,7 +35,7 @@
         
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
-            <div t-if="props.data.fel">
+            <div t-if="props.data.fel and props.data.is_to_invoice">
                 Documento Tributario Electrónico FEL<br/>
                 Factura Electrónica<br/>
                 <div t-if="props.data.fel.firma_fel">

@@ -26,6 +26,7 @@ patch(PosOrder.prototype, {
         result.fel['numero_acceso_fel'] = this.numero_acceso_fel;
         result.fel['contingencia_fel'] = this.contingencia_fel;
         result.fel['precio_total_descuento'] = this.precio_total_descuento || 0;
+        result.is_to_invoice = this.is_to_invoice()
         return result;
     },
 })
