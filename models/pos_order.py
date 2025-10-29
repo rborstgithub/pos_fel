@@ -11,7 +11,7 @@ class PosOrder(models.Model):
     serie_fel = fields.Char('Serie FEL', related='account_move.serie_fel')
     numero_fel = fields.Char('Numero FEL', related='account_move.numero_fel')
     certificador_fel = fields.Char('Certificador FEL', related='account_move.certificador_fel')
-    
+
     def _prepare_invoice_line(self, order_line):
         res = super(PosOrder, self)._prepare_invoice_line(order_line)
         if order_line.pack_lot_ids:
@@ -21,12 +21,12 @@ class PosOrder(models.Model):
 
     def _prepare_invoice_vals(self):
         res = super(PosOrder, self)._prepare_invoice_vals()
-        
+
         partes = (self.pos_reference or 'Order 0-0-0').split('-');
         numero_acceso_fel = partes[0]+partes[2];
         numero_acceso_fel = int(re.sub(r'[^\d]+', '', numero_acceso_fel));
-        
-        res['numero_acceso_fel'] = numero_acceso_fel+140000000
+
+        res['numero_acceso_fel'] = numero_acceso_fel+1000
         if self.pedido_origen_id and self.pedido_origen_id.account_move:
             res['factura_original_id'] = self.pedido_origen_id.account_move.id
             res['motivo_fel'] = 'Anulación'
