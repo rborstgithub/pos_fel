@@ -22,6 +22,17 @@
                     Nombre: <t t-esc="props.data.partner.nombre_facturacion_fel or props.data.partner.name or 'CONSUMIDOR FINAL'"/><br/>
                     Dirección: <t t-esc="props.data.partner.street or ''"/><br/><br/>
                 </t>
+                <t t-if="props.data.ask_tag_number">
+                    Etiqueta: <strong><t t-esc="props.data.tag_number"/></strong><br/>
+                </t>
+                <t t-if="props.data.takeout_option">
+                    <t t-if="props.data.take_out">
+                        <strong>Para Llevar</strong><br/>
+                    </t>
+                    <t t-else="">
+                        <strong>Para Restaurante</strong><br/>
+                    </t>
+                </t>
             </div>
         </xpath>
 
