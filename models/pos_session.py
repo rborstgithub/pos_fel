@@ -23,7 +23,8 @@ class PosSession(models.Model):
     def crear_partner_con_datos_sat(self, company_id, vat):
         if company_id:
             company = self.env['res.company'].search([('id','=',company_id)])
-            partners = self.env['res.partner'].search([('vat','=',vat)])
+            partners = self.env['res.partner'].search([('vat','=',vat)], limit=1)
+            logging.warning(partners)
 
             # Si el partner no existe se crea y si ya existe, se devuelve el que ya existe
             if len(partners) == 0:
@@ -33,11 +34,11 @@ class PosSession(models.Model):
                         'name': datos_facturacion_fel['nombre'],
                         'vat': datos_facturacion_fel['nit'],
                     }
-                    new_partner = self.env['res.partner'].create(partner_dic)
-                    return new_partner.read([])
+                    new_partner = self.env['res.partner'].sudo().create(partner_dic)
+                    return new_partner.id
                 else:
                     return []
             else:
-                return partners.read([])
+                return partners.id
         else:
             return []

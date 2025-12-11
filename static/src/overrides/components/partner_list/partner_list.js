@@ -7,11 +7,10 @@ patch(PartnerList.prototype, {
     async getNewPartners() {
         let result = await super.getNewPartners();
         if (!result.length) {
-            result = await this.pos.data.silentCall("pos.session", "crear_partner_con_datos_sat", [this.pos.company.id, this.state.query]);
-            //let newPartners = await this.getNewPartners();
-            //if (newPartners.length) {
-            //    this.clickPartner(newPartners[0]);
-            //}
+            const partner_id = await this.pos.data.silentCall("pos.session", "crear_partner_con_datos_sat", [this.pos.company.id, this.state.query]);
+            if (partner_id) {
+                result = await this.pos.data.searchRead("res.partner", [['id','=',partner_id]], [], {});
+            }
         }
         return result;
     }
