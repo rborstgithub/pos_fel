@@ -17,14 +17,13 @@ class PosSession(models.Model):
                     if order.account_move.state != 'open' and not order.account_move.firma_fel:
                         raise ValidationError('La factura del pedido {} no está firmada, por favor ingrese a la factura y validela para poder cerrar sesión.'.format(order.name))
 
-        return super(PosSession, self).action_pos_session_close(balancing_account, amount_to_balance, bank_payment_method_diffs)
+        return super().action_pos_session_close(balancing_account, amount_to_balance, bank_payment_method_diffs)
 
     @api.model
     def crear_partner_con_datos_sat(self, company_id, vat):
         if company_id:
             company = self.env['res.company'].search([('id','=',company_id)])
             partners = self.env['res.partner'].search([('vat','=',vat)], limit=1)
-            logging.warning(partners)
 
             # Si el partner no existe se crea y si ya existe, se devuelve el que ya existe
             if len(partners) == 0:

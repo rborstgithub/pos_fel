@@ -4,105 +4,80 @@
     <t t-name="pos_fel.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
         <!-- Información requerida por la SAT -->
         <xpath expr="//*[@class='cashier']" position="before">
-            <t t-if="props.data.is_to_invoice">
-                <br /><br />
-                <t t-esc="props.data.diario_factura_nombre or ''"/><br/>
-                <t t-esc="props.data.diario_factura_direccion or ''"/><br/>
-                <t t-esc="props.data.diario_factura_tel or ''"/><br/>
+            <div t-if="order.isToInvoice" class="mt-2">
+                <div>
+                    <span t-esc="order.config.diario_factura_nombre or ''"/>
+                </div>
+                <div>
+                    <span t-esc="order.config.diario_factura_direccion or ''"/>
+                </div>
+                <div>
+                    <span t-esc="order.config.diario_factura_tel or ''"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//*[@class='pos-receipt-customer mt-2']" position="inside">
+            <t t-if="order.isToInvoice">
+                <div>
+                    <span t-esc="order.partner_id.pos_contact_address or ''"/>
+                </div>
             </t>
         </xpath>
     </t>
 
-    <t t-name="pos_fel.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">
-        <xpath expr="//ReceiptHeader" position="after">
-            <div class="datos_factura">
-                <t t-if="props.data.is_to_invoice">
-                    Fecha: <t t-esc="props.data.date"/><br/>
-                    NIT: <t t-esc="props.data.partner.nit_facturacion_fel or props.data.partner.vat or 'CF'"/><br/>
-                    Nombre: <t t-esc="props.data.partner.nombre_facturacion_fel or props.data.partner.name or 'CONSUMIDOR FINAL'"/><br/>
-                    Dirección: <t t-esc="props.data.partner.street or ''"/><br/><br/>
-                </t>
-                <t t-if="props.data.ask_tag_number">
-                    Etiqueta: <strong><t t-esc="props.data.tag_number"/></strong><br/>
-                </t>
-                <t t-if="props.data.takeout_option">
-                    <t t-if="props.data.take_out">
-                        <strong>Para Llevar</strong><br/>
-                    </t>
-                    <t t-else="">
-                        <strong>Para Restaurante</strong><br/>
-                    </t>
-                </t>
-            </div>
-        </xpath>
-
-        <!-- Para las facturas que tienen negativos -->
-        <xpath expr="//OrderWidget" position="after">
-            <div t-if="props.data.fel and props.data.is_to_invoice">
-                <div>Subtotal: <span t-esc='props.formatCurrency(props.data.amount_total + props.data.fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
-                <div>Descuento: <span t-esc='props.formatCurrency(props.data.fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
-            </div>
-        </xpath>
-        
+    <t t-name="pos_fel.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">        
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
-            <div t-if="props.data.fel and props.data.is_to_invoice">
-                Documento Tributario Electrónico FEL<br/>
-                Factura Electrónica<br/>
-                <div t-if="props.data.fel.firma_fel">
-                    <t t-if="props.data.fel.firma_fel">
-                        Serie: <t t-esc="props.data.fel.serie_fel || ''"/><br/>
-                        Número: <t t-esc="props.data.fel.numero_fel || ''"/><br/>
-                        Autorización: <t t-esc="props.data.fel.firma_fel || ''"/><br/>
-                        Fecha Certificación: <t t-esc="props.data.date"/>
+            <div t-if="order.isToInvoice" class="mt-2" style="font-size: 75%">
+                <div>Documento Tributario Electrónico FEL</div>
+                <div>Factura Electrónica</div>
+                <div>Certificador</div>
+                <div t-if="!order.contingencia_fel">
+                    <t t-if="order.firma_fel">
+                        <div>Serie: <t t-esc="order.serie_fel || ''"/></div>
+                        <div>Número: <t t-esc="order.numero_fel || ''"/></div>
+                        <div>Autorización: <t t-esc="order.firma_fel || ''"/></div>
+                        <div>Fecha Certificación: <div t-if="order.date_order" id="order-date" t-out="order.formatDateOrTime('date_order')"/></div>
                     </t>
-                    <t t-if="props.data.fel.certificador_fel == 'infile' || !props.data.fel.certificador_fel">
-                        Certificador<br/>
-                        INFILE, S.A.<br/>
-                        NIT: 12521337<br/>
+                    <t t-if="order.certificador_fel == 'infile' || !order.certificador_fel">
+                        <div>INFILE, S.A.</div>
+                        <div>NIT: 12521337</div>
                     </t>
-                    <t t-if="props.data.fel.certificador_fel == 'g4s'">
-                        Certificador<br/>
-                        G4S DOCUMENTA, S. A.<br/>
-                        NIT: 60010207<br/>
+                    <t t-if="order.certificador_fel == 'g4s'">
+                        <div>G4S DOCUMENTA, S. A.</div>
+                        <div>NIT: 60010207</div>
                     </t>
-                    <t t-if="props.data.fel.certificador_fel == 'gom'">
-                        Certificador<br/>
-                        GOM SOLUTIONS, SOCIEDAD ANONIMA<br/>
-                        NIT: 95189416<br/>
+                    <t t-if="order.certificador_fel == 'gom'">
+                        <div>GOM SOLUTIONS, SOCIEDAD ANONIMA</div>
+                        <div>NIT: 95189416</div>
                     </t>
-                    <t t-if="props.data.fel.certificador_fel == 'ecofactura'">
-                        Certificador<br/>
-                        ECO-FACTURAS<br/>
-                        NIT: 64281167<br/>
+                    <t t-if="order.certificador_fel == 'ecofactura'">
+                        <div>ECO-FACTURAS</div>
+                        <div>NIT: 64281167</div>
                     </t>
-                    <t t-if="props.data.fel.certificador_fel == 'digifact'">
-                        Certificador<br/>
-                        DIGIFACT SERVICIOS, SOCIEDAD ANONIMA<br/>
-                        NIT: 77454820<br/>
+                    <t t-if="order.certificador_fel == 'digifact'">
+                        <div>DIGIFACT SERVICIOS, SOCIEDAD ANONIMA</div>
+                        <div>NIT: 77454820</div>
                     </t>
-                    <t t-if="props.data.fel.certificador_fel == 'ccg'">
-                        Certificador<br/>
-                        Cámara de Comercio de Guatemala<br/>
-                        NIT: 351598<br/>
+                    <t t-if="order.certificador_fel == 'ccg'">
+                        <div>Cámara de Comercio de Guatemala</div>
+                        <div>NIT: 351598</div>
                     </t>
-                    <t t-if="props.data.fel.certificador_fel == 'megaprint'">
-                        Certificador<br/>
-                        MEGAPRINT, S.A.<br/>
-                        NIT: 50510231<br/>
+                    <t t-if="order.certificador_fel == 'megaprint'">
+                        <div>MEGAPRINT, S.A.</div>
+                        <div>NIT: 50510231</div>
                     </t>
-                    <t t-if="props.data.fel.certificador_fel == 'totaldoc'">
-                        Certificador<br/>
-                        Grupo CDS, S.A.<br/>
-                        NIT: 107902281<br/>
+                    <t t-if="order.certificador_fel == 'totaldoc'">
+                        <div>Grupo CDS, S.A.</div>
+                        <div>NIT: 107902281</div>
                     </t>
                 </div>
-                <div t-if="!props.data.fel.firma_fel">
-                    Documento en Contingencia<br/>
-                    Número de Acceso: <span t-esc="props.data.fel.numero_acceso_fel"/>
+                <div t-if="order.contingencia_fel">
+                    <div>Documento en Contingencia</div>
+                    <div>Número de Acceso: <span t-esc="order.numero_acceso_fel"/></div>
                 </div>
-                <t t-if='!props.data.footer'>
-                    Sujeto a pagos trimestrales ISR<br/>
+                <t t-if='!order.footer'>
+                    <div>Sujeto a pagos trimestrales ISR</div>
                 </t>
             </div>
         </xpath>
