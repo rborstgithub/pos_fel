@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Point of Sale unido a facturacion electrónica',
-    'version': '3.0',
+    'name': 'Punto de venta unido a facturacion electrónica',
+    'version': '3.1',
     'category': 'Point of Sale',
     'sequence': 6,
-    'summary': 'Point of Sale unido a facturacion electrónica',
-    'description': """ Cambios al Punto de Venta para generar facturas electrónicas fácilmente """,
-    'website': 'http://aquih.com',
+    'summary': 'Punto de venta unido a facturacion electrónica',
+    'description': """ Cambios al punto de venta para generar facturas electrónicas fácilmente """,
     'author': 'aquíH',
-    'depends': ['point_of_sale', 'fel_gt'],
+    'website': 'http://www.aquih.com',
+    'depends': ['pos_gt', 'fel_gt'],
     'data': [],
     'installable': True,
     'auto_install': False,
