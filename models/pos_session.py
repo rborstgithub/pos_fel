@@ -15,7 +15,7 @@ class PosSession(models.Model):
                 pedidos_sin_facturar = session.order_ids.filtered(lambda order: not order.account_move and (order.state not in ['cancel'] or not order.currency_id.is_zero(order.amount_total)))
 
                 # No deben existir pedidos facturados con valor diferente de cero y validados que no tengan firma
-                pedidos_sin_firmar = session.order_ids.filtered(lambda order: order.account_move and not order.currency_id.is_zero(order.amount_total) and order.account_move.state == 'posted' not order.account_move.firma_fel)
+                pedidos_sin_firmar = session.order_ids.filtered(lambda order: order.account_move and not order.currency_id.is_zero(order.amount_total) and order.account_move.state == 'posted' and not order.account_move.firma_fel)
 
                 if len(pedidos_sin_facturar) > 0:
                     raise ValidationError(f'Tiene pedidos sin factura ({', '.join(pedidos_sin_facturar)}), no puede cerrar sesión mientras no haya facturado todos los pedidos.')
