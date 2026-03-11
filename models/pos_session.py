@@ -18,10 +18,10 @@ class PosSession(models.Model):
                 pedidos_sin_firmar = session.order_ids.filtered(lambda order: order.account_move and not order.currency_id.is_zero(order.amount_total) and order.account_move.state == 'posted' and not order.account_move.firma_fel)
 
                 if len(pedidos_sin_facturar) > 0:
-                    raise ValidationError(f'Tiene pedidos sin factura ({', '.join(pedidos_sin_facturar)}), no puede cerrar sesión mientras no haya facturado todos los pedidos.')
+                    raise ValidationError(f'Tiene pedidos sin factura ({', '.join(pedidos_sin_facturar.mapped('name'))}), no puede cerrar sesión mientras no haya facturado todos los pedidos.')
                 
                 if len(pedidos_sin_firmar) > 0:
-                    raise ValidationError(f'Tiene pedidos con facturas sin firmar ({', '.join(pedidos_sin_firmar)}), no puede cerrar sesión mientras no haya firmado todos los pedidos.')
+                    raise ValidationError(f'Tiene pedidos con facturas sin firmar ({', '.join(pedidos_sin_firmar.mapped('name'))}), no puede cerrar sesión mientras no haya firmado todos los pedidos.')
 
         return super().action_pos_session_close(balancing_account, amount_to_balance, bank_payment_method_diffs)
 
