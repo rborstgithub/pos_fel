@@ -24,26 +24,3 @@ class PosSession(models.Model):
                     raise ValidationError(f'Tiene pedidos con facturas sin firmar ({', '.join(pedidos_sin_firmar.mapped('name'))}), no puede cerrar sesión mientras no haya firmado todos los pedidos.')
 
         return super().action_pos_session_close(balancing_account, amount_to_balance, bank_payment_method_diffs)
-
-    @api.model
-    def crear_partner_con_datos_sat(self, company_id, vat):
-        if company_id:
-            company = self.env['res.company'].search([('id','=',company_id)])
-            partners = self.env['res.partner'].search([('vat','=',vat)], limit=1)
-
-            # Si el partner no existe se crea y si ya existe, se devuelve el que ya existe
-            if len(partners) == 0:
-                datos_facturacion_fel = self.env['res.partner'].obtener_datos_facturacion_fel(company, vat)
-                if datos_facturacion_fel['nombre'] and datos_facturacion_fel['nit']:
-                    partner_dic = {
-                        'name': datos_facturacion_fel['nombre'],
-                        'vat': datos_facturacion_fel['nit'],
-                    }
-                    new_partner = self.env['res.partner'].sudo().create(partner_dic)
-                    return new_partner.id
-                else:
-                    return []
-            else:
-                return partners.id
-        else:
-            return []
