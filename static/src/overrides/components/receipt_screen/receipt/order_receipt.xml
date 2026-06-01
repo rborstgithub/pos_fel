@@ -26,6 +26,9 @@
     </t>
 
     <t t-name="pos_fel.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension">        
+        <xpath expr="//*[@class='pos-config-name']" position="after">
+            <t t-if="company.name" t-out="company.name"/>
+        </xpath>
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <div t-if="order.isToInvoice" class="mt-2" style="font-size: 75%">
