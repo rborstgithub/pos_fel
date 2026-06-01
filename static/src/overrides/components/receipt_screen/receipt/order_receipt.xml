@@ -27,7 +27,7 @@
                     <t t-if="order.firma_fel">
                         <div>Serie: <t t-esc="order.serie_fel || ''"/> Número: <t t-esc="order.numero_fel || ''"/></div>
                         <div>Autorización: <t t-esc="order.firma_fel || ''"/></div>
-                        <div>Fecha Certificación: <t t-if="order.date_order" id="order-date" t-out="order.formatDateOrTime('date_order')"/></t>
+                        <div>Fecha Certificación: <t t-if="order.date_order" id="order-date" t-out="order.formatDateOrTime('date_order')"/></div>
                     </t>
                     <div>Certificador</div>
                     <t t-if="order.certificador_fel == 'infile' || !order.certificador_fel">
