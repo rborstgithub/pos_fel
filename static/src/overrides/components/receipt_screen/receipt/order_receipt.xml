@@ -47,8 +47,10 @@
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <div t-if="props.data.fel and props.data.is_to_invoice">
-                Documento Tributario Electrónico FEL<br/>
-                Factura Electrónica<br/>
+                <div>
+                    Documento Tributario Electrónico FEL
+                    Factura Electrónica
+                </div>
                 <div t-if="props.data.fel.firma_fel">
                     <t t-if="props.data.fel.firma_fel">
                         Serie: <t t-esc="props.data.fel.serie_fel || ''"/><br/>
