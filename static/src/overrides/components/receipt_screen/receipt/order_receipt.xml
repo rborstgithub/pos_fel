@@ -36,14 +36,10 @@
             </div>
         </xpath>
 
-        <!-- Para las facturas que tienen negativos -->
-        <xpath expr="//OrderWidget" position="after">
-            <div t-if="props.data.fel and props.data.is_to_invoice">
-                <div>Subtotal: <span t-esc='props.formatCurrency(props.data.amount_total + props.data.fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
-                <div>Descuento: <span t-esc='props.formatCurrency(props.data.fel.precio_total_descuento)' class="pos-receipt-right-align"/></div>
-            </div>
-        </xpath>
-        
+    <xpath expr="//div[contains(@class, 'pos-receipt-taxes')]" position="replace"/>
+
+    <xpath expr="//t[@t-if='props.data.total_discount']" position="replace"/>
+
         <!-- Información del certificador -->
         <xpath expr="//*[@class='before-footer']" position="after">
             <div t-if="props.data.fel and props.data.is_to_invoice">
