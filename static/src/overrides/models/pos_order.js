@@ -26,24 +26,25 @@ patch(PosOrder.prototype, {
             const producto = linea_pedido.product_id;
             const nombre_linea_venta = linea_pedido.sale_order_line_id?.name || "";
             const nombre_producto = producto?.display_name || "";
-
-            const nombre_producto_con_codigo = producto?.default_code
-                    ? `[${producto.default_code}] ${nombre_producto}`
-                    : nombre_producto;
-
-            const nombre_linea_venta_sin_codigo = nombre_linea_venta.replace(/^\[[^\]]+\]\s*/, "");        
-            const descripcion = nombre_producto && nombre_linea_venta_sin_codigo.startsWith(nombre_producto)
-                    ? nombre_linea_venta_sin_codigo.slice(nombre_producto.length).trim()
-                    : "";
         
-            linea_recibo.productName = descripcion || nombre_producto_con_codigo;        
-            linea_recibo.discount = "";        
+            const nombre_linea_venta_sin_codigo = nombre_linea_venta.replace(/^\[[^\]]+\]\s*/, "");
+            let descripcion = "";
+        
+            if (nombre_producto && nombre_linea_venta_sin_codigo.startsWith(nombre_producto)) {
+                descripcion = nombre_linea_venta_sin_codigo.slice(nombre_producto.length).trim();
+            } else if (nombre_linea_venta_sin_codigo && nombre_linea_venta_sin_codigo !== nombre_producto) {
+                descripcion = nombre_linea_venta_sin_codigo;
+            }
+        
+            linea_recibo.productName = descripcion || nombre_producto;
+            linea_recibo.discount = "";
+        
             const cantidad = linea_pedido.get_quantity();
             const precio_unitario_con_descuento = cantidad
                     ? linea_pedido.get_price_with_tax() / cantidad
                     : 0;
         
-            const simbolo_moneda = linea_pedido.currency?.symbol || "Q";        
+            const simbolo_moneda = linea_pedido.currency?.symbol || "Q";
             linea_recibo.unitPrice = `${simbolo_moneda} ${precio_unitario_con_descuento.toFixed(8)}`;
         });
 
